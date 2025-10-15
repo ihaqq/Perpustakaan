@@ -1,0 +1,518 @@
+/* Global Styles & Variables */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+ :root {
+    --primary-color: #5c6ac4;
+    --secondary-color: #f8f9fa;
+    --text-color: #2c3e50;
+    --text-light: #6c757d;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #495057;
+    --sidebar-active-bg: #e3f2fd;
+    --card-bg: #ffffff;
+    --border-radius: 16px;
+    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+/* Main Content & Navbar */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#sidebar-toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-right: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left h1 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-right .fa-bell {
+    font-size: 1.2rem;
+    color: #777;
+    cursor: pointer;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-profile .fa-user-circle {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.user-profile span {
+    font-weight: 600;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.card-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.table-container {
+    margin-top: 20px;
+}
+
+.table-container h4 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 12px 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+thead th {
+    background-color: #f2f2f2;
+    font-weight: 600;
+    color: #555;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: 1px solid var(--primary-color);
+}
+
+.btn-primary:hover {
+    background-color: #4b59b1;
+}
+
+.member-photo {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: #eee;
+    display: block;
+    border: 1px solid #ddd;
+}
+
+.action-icons a {
+    color: #777;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.action-icons a:hover {
+    color: var(--primary-color);
+}
+/* Filter Controls */
+
+.filter-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-controls .filter-button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #555;
+    transition: background-color 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-controls .filter-button:hover {
+    background-color: #f0f0f0;
+    border-color: var(--primary-color);
+}
+
+#bookSearch {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+/* Modal Styles */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.filter-modal {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.active .filter-modal {
+    transform: translateY(0);
+}
+
+.filter-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 30px 20px 30px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.filter-modal-header h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.filter-modal-close {
+    font-size: 1.5rem;
+    color: #777;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.filter-modal-close:hover {
+    color: #333;
+}
+
+.filter-modal-body {
+    padding: 30px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-option-item {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.filter-option-item:hover {
+    background-color: var(--sidebar-active-bg);
+    border-color: var(--primary-color);
+}
+
+.filter-option-item.selected {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+}
+
+.filter-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    padding: 20px 30px 30px 30px;
+    border-top: 1px solid var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: #ccc;
+    color: #333;
+    border: 1px solid #ccc;
+}
+
+.btn-secondary:hover {
+    background-color: #bbb;
+    border-color: #bbb;
+}
+
+.stock-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+}
+
+.stock-badge.high {
+    background-color: #12b76a;
+    /* Hijau */
+}
+
+.stock-badge.low {
+    background-color: #f79009;
+    /* Kuning/Oranye */
+}
+
+.stock-badge.empty {
+    background-color: #f04438;
+    /* Merah */
+}
+
+/* ... (kode CSS sebelumnya tetap dipertahankan) ... */
+
+ /* PERBAIKAN TABEL - Style Baru */
+.books-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.books-table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.books-table th {
+    padding: 16px 12px;
+    font-weight: 600;
+    text-align: left;
+    position: sticky;
+    top: 0;
+}
+
+.books-table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+.books-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.books-table tbody tr:hover {
+    background-color: rgba(92, 106, 196, 0.05);
+}
+
+.books-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.col-no {
+    width: 50px;
+    text-align: center;
+}
+
+.col-cover {
+    width: 60px;
+    text-align: center;
+}
+
+.col-title {
+    min-width: 180px;
+}
+
+.col-author {
+    min-width: 150px;
+}
+
+.col-publisher {
+    min-width: 150px;
+}
+
+.col-category {
+    width: 120px;
+}
+
+.col-genre {
+    width: 150px;
+}
+
+.col-stock {
+    width: 100px;
+    text-align: center;
+}
+
+.col-actions {
+    width: 100px;
+    text-align: center;
+}
+
+.book-cover {
+    width: 45px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.table-header {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.table-scroll {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+@media (max-width: 1200px) {
+    .books-table {
+        min-width: 1000px;
+    }
+}
+
+/* Memperbaiki tampilan badge stok */
+.stock-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    min-width: 40px;
+}
