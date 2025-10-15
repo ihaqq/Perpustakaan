@@ -89,9 +89,14 @@ Route::get('/daftar-peminjaman', function () {
 Route::get('/daftar-pengembalian', function () {
     return view('Admin/transaksi/daftar_pengembalian');
 })      -> name('daftar-pengembalian');
+
+// route admin riwayat transaksi
 Route::get('/riwayat-transaksi', function () {
-    return view('Admin/transaksi/riwayat_transaksi');
-})      -> name('riwayat-transaksi  ');
+    return view('Admin/transaksi/riwayat_transaksi/riwayat_transaksi');
+})      -> name('riwayat-transaksi');
+Route::get('/detail-transaksi', function () {
+    return view('Admin/transaksi/riwayat_transaksi/detail_riwayat/detail_riwayat');
+})      -> name('detail-transaksi');
 
 // route admin Laporan
 Route::get('/statistik-laporan', function () {

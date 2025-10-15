@@ -24,7 +24,6 @@
             <section class="content">
                 <div class="card">
                     <div class="card-header">
-                        <http://127.0.0.1:8000/api/books/>
                         <h3>Semua Anggota</h3>
                         <a href="#" class="btn btn-primary">Tambah Anggota</a>
                     </div>

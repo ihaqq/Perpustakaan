@@ -56,10 +56,11 @@
                             <span>Transaksi</span> 
                             <i class="fas fa-caret-down"></i>
                         </a>
-                        <ul class="submenu" style="{{ request()->routeIs('peminjaman') || request()->routeIs('pengembalian') || request()->routeIs('riwayat-transaksi') ? 'display: block;' : ''}}">
+                        <ul class="submenu" style="{{ request()->routeIs('peminjaman') || request()->routeIs('pengembalian') || request()->routeIs('riwayat-transaksi') || request()->routeIs('detail-transaksi') ? 'display: block;' : ''}}">
                             <li class="{{ request()->routeIs('peminjaman') ? 'active' : ''}}"><a href="transaksi.html"><i class="fas fa-hand-holding"></i>Peminjaman</a></li>
                             <li class="{{ request()->routeIs('pengembalian') ? 'active' : ''}}"><a href="#"><i class="fas fa-undo-alt"></i>Pengembalian</a></li>
-                            <li class="{{ request()->routeIs('riwayat-transaksi') ? 'active' : ''}}"><a href="#"><i class="fas fa-history"></i>Riwayat</a></li>
+                            <li class="{{ request()->routeIs('riwayat-transaksi') ? 'active' : ''}}"><a href="{{route('riwayat-transaksi')}}"><i class="fas fa-history"></i>Riwayat</a></li>
+                            <li class="{{ request()->routeIs('detail-transaksi') ? 'active' : ''}}"><a href="{{route('detail-transaksi')}}"><i class="fas fa-info-circle"></i>Detail Transaksi</a></li>
                         </ul>
                     </li>
                     <li class="{{ request()->routeIs('statistik-laporan') || request()->routeIs('buku-populer') ? 'active' : ''}}">

@@ -33,7 +33,25 @@ body {
     min-height: 100vh;
     transition: all 0.3s ease;
 }
-/* Sidebar */
+/* Custom Scrollbar */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4c63d2;
+}
 
 /* Main Content & Navbar */
 
