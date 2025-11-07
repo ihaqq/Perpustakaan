@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\BookControllerCopy;
 use App\Http\Controllers\API\UserController;
 
 
@@ -10,8 +10,13 @@ use App\Http\Controllers\API\UserController;
 Route::apiResource('users', UserController::class, );
 
 // Route untuk BookController
-Route::apiResource('books', BookController::class, );
+Route::apiResource('books', BookControllerCopy::class, );
 
+
+// Route test api
+Route::get('/test', function () {
+    return 'Route API aktif';
+});
 
 
 
@@ -26,6 +31,6 @@ Route::apiResource('books', BookController::class, );
 
 
 // Route Test
-Route::get('/test', function () {
-    return 'Route API aktif';
-});
+// Route::get('/test', function () {
+//     return 'Route API aktif';
+// });
