@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Book;
 
-class Bookrepository implements BookRepositoryInterface
+class BookRepository implements BookRepositoryInterface
 {
     public function all()
     {
@@ -16,7 +16,10 @@ class Bookrepository implements BookRepositoryInterface
     {
         return Book::findOrFail($id);
     }
-
+    public function findByCode($kode_buku)
+    {
+        return Book::where('kode_buku', $kode_buku)->first();
+    }
     public function create(array $data)
     {
         return Book::create($data);
