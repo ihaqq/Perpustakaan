@@ -3,24 +3,24 @@
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('sampah/welcome');
-})      -> name('/');
+// Route::get('/', function () {
+//     return view('sampah/welcome');
+// })      -> name('/');
 
-Route::get('/halaman-admin', function () {
-    return view('Admin/dashboard/dashboard_improved');
-})      -> name('dashboard-admin');
+// Route::get('/halaman-admin', function () {
+//     return view('Admin/dashboard/dashboard_improved');
+// })      -> name('dashboard-admin');
 
-Route::get('/halaman-daftar-anggota', function () {
-    return view('Admin/anggota/halaman_anggota');
-});
+// Route::get('/halaman-daftar-anggota', function () {
+//     return view('Admin/anggota/halaman_anggota');
+// });
 
-Route::get('/halaman-admin-inspirasi', function () {
-    return view('Admin/template/gemini/dashboard');
-});
-Route::get('/buku', function () {
-    return view('Admin/buku/halaman_buku');
-});
+// Route::get('/halaman-admin-inspirasi', function () {
+//     return view('Admin/template/gemini/dashboard');
+// });
+// Route::get('/buku', function () {
+//     return view('Admin/buku/halaman_buku');
+// });
 
 
 // testing
