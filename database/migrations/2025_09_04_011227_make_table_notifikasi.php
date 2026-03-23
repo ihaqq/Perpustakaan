@@ -13,8 +13,8 @@ return new class extends Migration
     {
         // Tabel Notifikasi
         Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('id_user')->nullable()->references('id')->on('users');
             $table->boolean('admin')->default(false);
             $table->text('pesan');
             $table->boolean('dibaca')->default(false);

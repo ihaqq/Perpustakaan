@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         // Tabel Admin (hanya satu admin tetap dibuat terpisah)
-        Schema::create('Users', function (Blueprint $table) {
-            $table->id();
+        Schema::create('users', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->string('nama');
             $table->string('username')->unique();   
+            $table->string('telepon', 255)->nullable();
             $table->string('password');
             $table->string('role');
             // $table->rememberToken();

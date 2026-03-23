@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Genre extends Model
 {
     use HasUuids;
 
     // Menentukan nama tabel yang digunakan oleh model ini
-    protected $table = 'books';
+    protected $table = 'genres';
 
     // Menentukan primary key tabel
     protected $primaryKey = 'id';
@@ -26,19 +26,13 @@ class Book extends Model
 
     // Menentukan atribut yang dapat diisi (mass assignable)
     protected $fillable = [
-        'kode_buku',
-        'genres_id',
-        'judul',
-        'pengarang',
-        'penerbit',
-        'tahun_terbit',
-        'cover',
-        'stok'
+        'nama_genre',
+        'kategori_buku',
+        'deskripsi',
     ];
 
-    public function genre()
+    public function books()
     {
-        return $this->belongsTo(Genre::class,'genres_id', 'id');
+        return $this->hasMany(Book::class, 'genres_id');
     }
-
 }

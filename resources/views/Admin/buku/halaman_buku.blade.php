@@ -40,7 +40,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Gambar Buku</th>
+                                    <th>Cover</th>
                                     <th>Judul Buku</th>
                                     <th>Pengarang</th>
                                     <th>Penerbit</th>

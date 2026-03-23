@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
-            $table->id();
+        Schema::create('genres', function (Blueprint $table) {
+            $table->uuid('id')->primary();
+            $table->string('nama_genre', 255);
+            $table->enum('kategori_buku', ['Fiksi', 'Non Fiksi']);
+            $table->string('deskripsi', 255);
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('genre_buku');
     }
 };

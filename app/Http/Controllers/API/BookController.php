@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers\API;
 
-use App\Services\BookService;
 use Illuminate\Http\Request;
+use App\Services\BookService;
+use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BookResource;
 
 class BookController extends Controller
 {
@@ -15,11 +17,29 @@ class BookController extends Controller
     }
     public function index()
     {
-        return response()->json($this->bookService->getAllBooks());
+        try{
+
+            $data = $this->bookService->getAllBooks();
+
+            if(!$data) {
+                return ResponseHelper::error(
+                    null,
+                    'Data buku tidak di temukan',
+                    404
+                );
+            }
+            return ResponseHelper::success(
+                BookResource::collection($data),
+                'Berhasil mengambil data buku'
+            );
+
+        } catch (\Throwable $th) {
+            return ResponseHelper::error(null, 'Gagal mengambil data buku' . $th->getMessage());
+        }
     }
     public function store(Request $request)
     {
-        $data = $request->only(['kode_buku', 'judul', 'pengarang', 'penerbit', 'tahun_terbit', 'kategori', 'genre', 'stok']);
+        $data = $request->only(['genres_id','kode_buku', 'judul', 'pengarang', 'penerbit', 'tahun_terbit', 'stok']);
         return response()->json($this->bookService->createBook($data));
     }
     public function show($id)

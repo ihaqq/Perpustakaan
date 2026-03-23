@@ -23,18 +23,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 
-// testing
-Route::get('/aduh1', function () {
-    return view('Admin/aduh');
-}) -> name('home');
-Route::get('/aduh2', function () {
-    return view('Admin/aduh');
-}) -> name('about');
-Route::get('/aduh3', function () {
-    return view('Admin/aduh');
-}) -> name('contact');
-
-
 // route admin dashboard
 Route::get('/dashboard', function () {
     return view('Admin/dashboard/dashboard');

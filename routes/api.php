@@ -6,11 +6,14 @@ use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\UserController;
 
 
-// Route untuk UserController
+// Route UserController (testing)
 Route::apiResource('users', UserController::class, );
 
-// Route untuk BookController
+// Route Books
 Route::apiResource('books', BookController::class, );
+
+// Route Peserta
+Route::apiResource('anggota', AnggotaController::class,);
 
 
 // Route test api
@@ -20,7 +23,7 @@ Route::get('/test', function () {
 
 
 
-
+            
 
 
 

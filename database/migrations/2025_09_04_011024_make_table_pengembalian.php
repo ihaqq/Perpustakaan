@@ -13,8 +13,8 @@ return new class extends Migration
     {
         // Tabel Pengembalian
         Schema::create('pengembalian', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('peminjaman_id')->constrained('peminjaman')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('id_peminjaman')->references('id')->on('peminjaman');
             $table->date('tanggal_dikembalikan');
             $table->integer('terlambat_hari')->default(0);
             $table->integer('denda_per_hari')->default(1000);
