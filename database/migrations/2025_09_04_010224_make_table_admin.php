@@ -13,7 +13,7 @@ return new class extends Migration
     {
         // Tabel Admin (hanya satu admin tetap dibuat terpisah)
         Schema::create('admin', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('username')->unique();
             $table->string('password');
             $table->timestamps();

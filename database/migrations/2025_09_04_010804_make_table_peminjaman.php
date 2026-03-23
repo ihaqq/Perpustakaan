@@ -13,9 +13,10 @@ return new class extends Migration
     {
         // Tabel Peminjaman
         Schema::create('peminjaman', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('nama_peminjam')->constrained('users')->onDelete('cascade');
+            $table->uuid('id')->primary();
+            $table->foreignUuid('id_user')->nullable()->references('id')->on('users');
             $table->date('tanggal_pinjam');
+            $table->date('batas_pengembalian')->nullable();
             $table->date('tanggal_kembali');
             $table->enum('status', ['dipinjam', 'selesai'])->default('dipinjam');
             $table->timestamps();

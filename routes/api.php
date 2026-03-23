@@ -6,11 +6,27 @@ use App\Http\Controllers\API\BookController;
 use App\Http\Controllers\API\UserController;
 
 
-// Route untuk UserController
+// Route UserController (testing)
 Route::apiResource('users', UserController::class, );
 
-// Route untuk BookController
+// Route Books
 Route::apiResource('books', BookController::class, );
+
+// Route Peserta
+Route::apiResource('anggota', AnggotaController::class,);
+
+
+// Route test api
+Route::get('/test', function () {
+    return 'Route API aktif';
+});
+
+
+
+            
+
+
+
 
 
 
@@ -23,9 +39,3 @@ Route::apiResource('books', BookController::class, );
 // Route::get('/books', [BookController::class, 'index']);
 // Route::get('/books/{id}', [BookController::class, 'show']);
 // Route::post('/books/{id}', [BookController::class, 'store']);
-
-
-// Route Test
-Route::get('/test', function () {
-    return 'Route API aktif';
-});

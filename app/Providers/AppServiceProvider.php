@@ -2,23 +2,20 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\ServiceProvider;
+use App\Repositories\BookRepository;
+use App\Repositories\BookRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Define your route model bindings, pattern filters, and other route configuration.
-     */
+    public function register(): void
+    {
+        // Binding seharusnya di sini
+        $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
+    }
+
     public function boot(): void
     {
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-        });
+        // Tidak perlu mendefinisikan route di Laravel 11
     }
 }

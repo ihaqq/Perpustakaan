@@ -54,84 +54,23 @@
             }
         });
 
-        const books = [{
-            judul: 'Laskar Pelangi',
-            pengarang: 'Andrea Hirata',
-            penerbit: 'Bentang Pustaka',
-            kategori: 'Fiksi',
-            genre: 'Novel',
-            stok: 10
-        }, {
-            judul: 'Filosofi Teras',
-            pengarang: 'Henry Manampiring',
-            penerbit: 'Kompas',
-            kategori: 'Non-Fiksi',
-            genre: 'Pengembangan Diri',
-            stok: 5
-        }, {
-            judul: 'Atomic Habits',
-            pengarang: 'James Clear',
-            penerbit: 'Gramedia Pustaka Utama',
-            kategori: 'Non-Fiksi',
-            genre: 'Petualangan',
-            stok: 2
-        }, {
-            judul: 'Bumi Manusia',
-            pengarang: 'Pramoedya Ananta Toer',
-            penerbit: 'Hasta Mitra',
-            kategori: 'Fiksi',
-            genre: 'Novel Sejarah',
-            stok: 0
-        }, {
-            judul: 'Laut Bercerita',
-            pengarang: 'Leila S. Chudori',
-            penerbit: 'Kepustakaan Populer Gramedia',
-            kategori: 'Fiksi',
-            genre: 'Novel Sejarah',
-            stok: 12
-        }, {
-            judul: 'Dune',
-            pengarang: 'Frank Herbert',
-            penerbit: 'Berkley Publishing Group',
-            kategori: 'Fiksi',
-            genre: 'Fiksi Ilmiah',
-            stok: 8
-        }, {
-            judul: 'The Hobbit',
-            pengarang: 'J.R.R. Tolkien',
-            penerbit: 'Allen & Unwin',
-            kategori: 'Fiksi',
-            genre: 'Fantasi',
-            stok: 7
-        }, {
-            judul: 'It',
-            pengarang: 'Stephen King',
-            penerbit: 'Viking Press',
-            kategori: 'Fiksi',
-            genre: 'Horor',
-            stok: 3
-        }, {
-            judul: 'Steve Jobs',
-            pengarang: 'Walter Isaacson',
-            penerbit: 'Simon & Schuster',
-            kategori: 'Non-Fiksi',
-            genre: 'Biografi',
-            stok: 6
-        }, {
-            judul: 'Komik Jagoan Cilik',
-            pengarang: 'Budi Hartono',
-            penerbit: 'Elex Media Komputindo',
-            kategori: 'Fiksi',
-            genre: 'Komik',
-            stok: 15
-        }, {
-            judul: 'A Brief History of Time',
-            pengarang: 'Stephen Hawking',
-            penerbit: 'Bantam Books',
-            kategori: 'Non-Fiksi',
-            genre: 'Sains',
-            stok: 4
-        }, ];
+        let books = [];
+
+        async function fetchBooks() {
+
+            try {
+                const res = await fetch('/api/books');
+                const json = await res.json();
+
+                // sesuaikan dengan struktur API kamu
+                books = json.data ?? json;
+
+                populateBooksTable(books);
+            } catch (error) {
+                console.error('Gagal mengambil data buku:', error);
+            }
+        }
+
 
         function populateBooksTable(filteredBooks = books) {
             const bookTableBody = document.getElementById('bookTableBody');
@@ -214,7 +153,7 @@
 
         bookSearchInput.addEventListener('keyup', filterBooks);
 
-        window.onload = () => {
-            populateBooksTable();
+        window.onload = async() => {
+            await fetchBooks();
             filterBooks();
         };  
