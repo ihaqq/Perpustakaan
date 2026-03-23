@@ -3,8 +3,8 @@
 @section('title', 'Daftar Anggota')
 
 @push('styles')
-    @vite('resources/css/admin/anggota/halaman_anggota_tanpa_sidebar.css')
-    @vite('resources/css/admin/sidebar/sidebar_tes.css')
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/anggota/halaman_anggota_tanpa_sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/sidebar/sidebar_tes.css') }}">
 @endpush
 
 @section('content')
@@ -110,5 +110,5 @@
     </div>
 @endsection
 @push('scripts')
-    @vite('resources/js/admin/anggota/daftar_anggota.js')
+    <script src="{{ asset('asset/js/admin/anggota/daftar_anggota.js') }}"></script>
 @endpush

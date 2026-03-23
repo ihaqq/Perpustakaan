@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        // Tidak perlu mendefinisikan route di Laravel 11
+        // Force HTTPS for ngrok to avoid mixed-content error
+        if (config('app.env') !== 'local' || request()->server('HTTP_X_FORWARDED_PROTO') == 'https') {
+            \Illuminate\Support\Facades\URL::forceScheme('https');
+        }
     }
 }

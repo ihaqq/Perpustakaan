@@ -3,8 +3,8 @@
 @section('title', 'Dashboard Admin')
 
 @push('styles')
-    @vite('resources/css/admin/dashboard/dashboard_tanpa_sidebar.css')
-    @vite('resources/css/admin/sidebar/sidebar_tes.css')
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/dashboard/dashboard_tanpa_sidebar.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/sidebar/sidebar_tes.css') }}">
 @endpush
 
 @section('content')
@@ -175,6 +175,6 @@
         </main>
 @endsection
 @push('scripts')
-    @vite('resources/js/admin/dashboard/dashboard_copy.js')
-    <!-- @vite('resources/js/admin/navbar/navbar.js') -->
+    <script src="{{ asset('asset/js/admin/dashboard/dashboard_copy.js') }}"></script>
+    <!-- <script src="{{ asset('asset/js/admin/navbar/navbar.js') }}"></script> -->
 @endpush

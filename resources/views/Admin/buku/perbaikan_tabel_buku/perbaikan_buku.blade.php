@@ -3,8 +3,8 @@
 @section('title', 'Halaman Buku')
 
 @push('styles')
-    @vite('resources/css/admin/buku/perbaikan_buku.css')
-    @vite('resources/css/admin/sidebar/sidebar_tes.css')
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/buku/perbaikan_buku.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/sidebar/sidebar_tes.css') }}">
 @endpush
 
 @section('content')
@@ -118,6 +118,6 @@
 @endsection
 
 @push('scripts')
-    <!-- @vite('resources/js/admin/buku/halaman_buku.js') -->
-    @vite('resources/js/admin/buku/perbaikan_buku.js')
+    <!-- <script src="{{ asset('asset/js/admin/buku/halaman_buku.js') }}"></script> -->
+    <script src="{{ asset('asset/js/admin/buku/perbaikan_buku.js') }}"></script>
 @endpush

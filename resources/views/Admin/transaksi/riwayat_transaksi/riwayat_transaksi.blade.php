@@ -3,8 +3,8 @@
 @section('title', 'Halaman Riwayat')
 
 @push('styles')
-    @vite('resources/css/admin/transaksi/riwayat_transaksi/halaman_riwayat_transaksi.css')
-    @vite('resources/css/admin/sidebar/sidebar_tes.css')
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/transaksi/riwayat_transaksi/halaman_riwayat_transaksi.css') }}">
+    <link rel="stylesheet" href="{{ asset('asset/css/admin/sidebar/sidebar_tes.css') }}">
 @endpush
 
 @section('content')
@@ -96,5 +96,5 @@
         </main>
 @endsection
 @push('scripts')
-    @vite('resources/js/admin/transaksi/riwayat_transaksi/halaman_riwayat_transaksi.js')
+    <script src="{{ asset('asset/js/admin/transaksi/riwayat_transaksi/halaman_riwayat_transaksi.js') }}"></script>
 @endpush
