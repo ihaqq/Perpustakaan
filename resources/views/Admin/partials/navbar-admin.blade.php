@@ -6,7 +6,7 @@
 <body>
             <aside class="sidebar">
             <div class="logo">
-                <img src='{{ asset('images/siperpus.png') }}' width="40" height="40" alt="SIPERPUS Logo">
+                <img src='{{ asset('images/logoPerpus/siperpus.png') }}' width="40" height="40" alt="SIPERPUS Logo">
                 <h2>SIPERPUS</h2>
             </div>
             <nav>

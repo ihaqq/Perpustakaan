@@ -13,16 +13,8 @@ class AppServiceProvider_copy extends ServiceProvider
      * Define your route model bindings, pattern filters, and other route configuration.
      */
     public function boot(): void
-    {
-        $this->routes(function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->group(base_path('routes/api.php'));
-
-            Route::middleware('web')
-                ->group(base_path('routes/web.php'));
-        });
-    }
+{ if (app()->environment('local')) 
+{ URL::forceScheme('https'); } }
     // public function register(){
     // $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
     // }

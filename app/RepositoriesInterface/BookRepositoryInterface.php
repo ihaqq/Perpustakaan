@@ -2,14 +2,15 @@
 
 
 
-namespace App\Repositories;
+namespace App\RepositoriesInterface;
 
 interface BookRepositoryInterface
 {
     public function all();
     public function find($id);
-    public function findByCode($kode_buku);     
+    public function findById($id);     
     public function create(array $data);
     public function update($id, array $data);
     public function delete($id);
+    public function getBooksWithQuery(array $params);
 }

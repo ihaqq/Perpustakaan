@@ -176,5 +176,4 @@
 @endsection
 @push('scripts')
     @vite('resources/js/admin/dashboard/dashboard_copy.js')
-    <!-- @vite('resources/js/admin/navbar/navbar.js') -->
 @endpush

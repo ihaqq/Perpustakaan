@@ -1,4 +1,4 @@
-        // Enhanced Dashboard JavaScript
+            // Enhanced Dashboard JavaScript
         class Dashboard {
             constructor() {
                 this.sidebar = document.querySelector(".sidebar");

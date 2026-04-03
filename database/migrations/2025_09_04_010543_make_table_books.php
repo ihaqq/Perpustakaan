@@ -21,6 +21,10 @@ return new class extends Migration
             $table->string('penerbit',255);
             $table->year('tahun_terbit');
             $table->string('cover')->nullable();
+            $table->string('bahasa', 255)->nullable();
+            $table->string('lokasi_rak', 255)->nullable();
+            $table->integer('jumlah_halaman')->nullable();
+            $table->text('sinopsis')->nullable();
             $table->integer('stok')->default(0);
             $table->string('kondisi_awal', 255)->nullable();
             $table->timestamps();

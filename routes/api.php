@@ -1,16 +1,22 @@
 <?php
 
+use App\Http\Controllers\API\BookController;
+use App\Http\Controllers\API\GenreController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\BookController;
-use App\Http\Controllers\API\UserController;
 
 
 // Route UserController (testing)
 Route::apiResource('users', UserController::class, );
 
 // Route Books
-Route::apiResource('books', BookController::class, );
+Route::apiResource('books', BookController::class);
+
+// Route Genre
+Route::get('genre/list', [GenreController::class, 'GetAll']);
+Route::apiResource('genre', GenreController::class);
+
 
 // Route Peserta
 Route::apiResource('anggota', AnggotaController::class,);
