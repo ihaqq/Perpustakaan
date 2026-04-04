@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Repositories\BookRepository;
-use App\Repositories\BookRepositoryInterface;
+use App\Repositories\GenreRepository;
+use App\RepositoriesInterface\BookRepositoryInterface;
+use App\RepositoriesInterface\GenreRepositoryInterface;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -12,10 +15,12 @@ class AppServiceProvider extends ServiceProvider
     {
         // Binding seharusnya di sini
         $this->app->bind(BookRepositoryInterface::class, BookRepository::class);
+        $this->app->bind(GenreRepositoryInterface::class, GenreRepository::class);
     }
 
     public function boot(): void
     {
-        // Tidak perlu mendefinisikan route di Laravel 11
+        // if (app()->environment('local')) 
+        // { URL::forceScheme('https'); } 
     }
 }
