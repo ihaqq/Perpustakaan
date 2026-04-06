@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Book;
+use App\Models\Kelas;
 use App\RepositoriesInterface\KelasRepositoryInterface;
 
 class KelasRepository implements KelasRepositoryInterface
@@ -42,39 +43,26 @@ class KelasRepository implements KelasRepositoryInterface
         return $book->delete();
     }
     
-    public function getBooksWithQuery(array $params)
+    public function getKelasWithQuery(array $params)
     {
-        $query = Book::query();
+        $query = Kelas::query();
 
         // Search
         if (!empty($params['search'])) {
             $search = $params['search'];
             $query->where(function ($q) use ($search) {
-                $q->where('judul', 'like', "%$search%")
-                ->orWhere('kode_buku', 'like', "%$search%");
+                $q->where('nama_kelas', 'like', "%$search%")
+                ->orWhere('jurusan', 'like', "%$search%");
             });
         }
 
         // Filter
-        if (!empty($params['genre_id'])) {
-            $query->where('genres_id', $params['genre_id']);
+        if (!empty($params['jurusan'])) {
+            $query->where('jurusan', $params['jurusan']);
         }
 
-        if (!empty($params['tahun'])) {
-            $query->where('tahun_terbit', $params['tahun']);
-        }
-
-        // Filter Stok
-        if (!empty($params['stok'])) {
-            $kategoriStok = strtolower($params['stok']);
-
-            if ($kategoriStok == 'high') {
-                $query->where('stok','>=', '5');
-            } elseif ($kategoriStok == 'low') {
-                $query->where('stok', [1, 4]);
-            } elseif ($kategoriStok == 'empty') {
-                $query->where('stok', '<=','0');
-            }
+        if (!empty($params['nama_kelas'])) {
+            $query->where('nama_kelas', $params['nama_kelas']);
         }
 
         // sortBy

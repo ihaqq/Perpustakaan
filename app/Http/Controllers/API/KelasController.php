@@ -7,7 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
 use App\Http\Resources\BookResource;
-use App\Services\BookService;
+use App\Http\Resources\KelasResource;
+use App\Services\KelasService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -15,26 +16,24 @@ use Symfony\Component\HttpFoundation\Response;
 
 class KelasController extends Controller
 {
-    protected $bookService;
+    protected $kelasService;
     
-    public function __construct(BookService $bookService)
+    public function __construct(KelasService $kelasService)
     {
-        $this->bookService = $bookService;
+        $this->kelasService = $kelasService;
     }
     public function index(Request $request)
     {
         try {
             $params = $request->only([
                 'search',
-                'kategori',
-                'genre_id',
-                'tahun',
-                'stok',
+                'jurusan',
+                'nama_kelas',
                 'per_page',
                 'sort_order'
             ]);
 
-            $query = $this->bookService->getBooks($params);
+            $query = $this->kelasService->getKelas($params);
 
             $result = PaginationHelper::paginate(
                 $query,
@@ -43,19 +42,52 @@ class KelasController extends Controller
 
             return ResponseHelper::success(
                 [
-                    'books' => BookResource::collection(collect($result['data'])),
+                    'kelas' => KelasResource::collection(collect($result['data'])),
                     'meta' => $result['meta']
                 ],
-                'Berhasil mengambil data buku'
+                'Berhasil mengambil data kelas'
             );
 
         } catch (\Throwable $th) {
             return ResponseHelper::error(
                 null,
-                'Gagal mengambil data buku ' . $th->getMessage()
+                'Gagal mengambil data kelas ' . $th->getMessage()
             );
         }
     }
+
+    // tanpa pagination
+    public function getAll(Request $request)
+    {
+        try {
+            $params = $request->only([
+                'search',
+                'jurusan',
+                'nama_kelas'
+            ]);
+
+            // Ambil query builder
+            $query = $this->kelasService->getKelas($params);
+
+            // Eksekusi query dengan get()
+            $kelas = $query->get();
+
+            return ResponseHelper::success(
+                [
+                    'Kelas' => KelasResource::collection($kelas),
+                    // Hapus 'meta' karena ini bukan pagination
+                ],
+                'Berhasil mengambil semua data kelas'
+            );
+
+        } catch (\Throwable $th) {
+            return ResponseHelper::error(
+                null,
+                'Gagal mengambil data kelas: ' . $th->getMessage()
+            );
+        }
+    }
+
     public function store(BookStoreRequest $request)
     {
         try {

@@ -32,9 +32,9 @@ Route::get('/dashboard', function () {
 Route::get('/daftar-anggota', function () {
     return view('Admin/anggota/daftar_anggota');
 })      -> name('daftar-anggota');
-Route::get('/tambah-anggota', function () {
-    return view('Admin/anggota/tambah-anggota');
-})      -> name('tambah-anggota');
+Route::get('/konfirmasi-pengguna', function () {
+    return view('Admin/anggota/konfirmasi_pengguna');
+})      -> name('konfirmasi-pengguna');
 Route::get('/edit-anggota', function () {
     return view('Admin/anggota/edit-anggota');
 })      -> name('edit-anggota');
@@ -43,15 +43,15 @@ Route::get('/detail-anggota', function () {
 })      -> name('detail-anggota');
 
 // route admin buku
-Route::get('/halaman-buku', function () {
+Route::get('/daftar-buku', function () {
     return view('Admin/buku/halaman_buku');
-})      -> name('halaman-buku');
+})      -> name('daftar-buku');
 Route::get('/perbaikan-halaman-buku', function () {
     return view('Admin/buku/perbaikan_tabel_buku/perbaikan_buku');
 })      -> name('perbaikan-halaman-buku');
-Route::get('/kategori-buku', function () {
-    return view('Admin/buku/kategori_buku');
-})      -> name('kategori-buku');
+Route::get('/daftar-genre', function () {
+    return view('Admin/Genre/halaman-genre');
+})      -> name('daftar-genre');
 Route::get('/tambah-buku', function () {
     return view('Admin/buku/tambah_buku');
 })      -> name('tambah-buku');

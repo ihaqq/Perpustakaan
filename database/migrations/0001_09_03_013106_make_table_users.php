@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('telepon')->nullable();
             $table->string('foto_profile')->nullable();
-            $table->enum('gender', ['Laki-laki', 'Perempuan'])->nullable();
+            $table->enum('gender', ['Laki-Laki', 'Perempuan'])->nullable();
             $table->timestamps();
         });
     }

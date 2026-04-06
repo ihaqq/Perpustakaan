@@ -27,14 +27,14 @@ class Kelas extends Model
 
     // Menentukan atribut yang dapat diisi (mass assignable)
     protected $fillable = [
-        'kelas',
+        'nama_kelas',
         'jurusan',
         'deskripsi_jurusan',
     ];
 
     public function anggota()
     {
-        return $this->hasMany(Anggota::class,'anggota_id');
+        return $this->hasMany(Anggota::class,'kelas_id', 'id');
     }
 
 }

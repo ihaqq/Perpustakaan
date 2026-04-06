@@ -27,7 +27,6 @@ class Anggota extends Model
 
     // Menentukan atribut yang dapat diisi (mass assignable)
     protected $fillable = [
-        'kode_buku',
         'user_id',
         'kelas_id',
         'status',

@@ -6,8 +6,9 @@ use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookStoreRequest;
 use App\Http\Requests\BookUpdateRequest;
+use App\Http\Resources\AnggotaResource;
 use App\Http\Resources\BookResource;
-use App\Services\BookService;
+use App\Services\AnggotaService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -15,26 +16,27 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AnggotaController extends Controller
 {
-    protected $bookService;
+    protected $anggotaService;
     
-    public function __construct(BookService $bookService)
+    public function __construct(AnggotaService $anggotaService)
     {
-        $this->bookService = $bookService;
+        $this->anggotaService = $anggotaService;
     }
     public function index(Request $request)
     {
         try {
             $params = $request->only([
                 'search',
+                'status',
+                'kelas_id',
+                'jurusan',
+                'kelas',
                 'kategori',
-                'genre_id',
-                'tahun',
-                'stok',
                 'per_page',
                 'sort_order'
             ]);
 
-            $query = $this->bookService->getBooks($params);
+            $query = $this->anggotaService->getAnggota($params);
 
             $result = PaginationHelper::paginate(
                 $query,
@@ -43,16 +45,16 @@ class AnggotaController extends Controller
 
             return ResponseHelper::success(
                 [
-                    'books' => BookResource::collection(collect($result['data'])),
+                    'anggota' => AnggotaResource::collection(collect($result['data'])),
                     'meta' => $result['meta']
                 ],
-                'Berhasil mengambil data buku'
+                'Berhasil mengambil data anggota'
             );
 
         } catch (\Throwable $th) {
             return ResponseHelper::error(
                 null,
-                'Gagal mengambil data buku ' . $th->getMessage()
+                'Gagal mengambil data anggota' . $th->getMessage()
             );
         }
     }
@@ -63,7 +65,7 @@ class AnggotaController extends Controller
             $data = $request->validated();
 
             // Panggil service untuk memproses pembuatan buku dan upload file
-            $book = $this->bookService->createBook($data);
+            $book = $this->anggotaService->createBook($data);
 
             // Return response sukses menggunakan ResponseHelper
             return ResponseHelper::success(
@@ -92,21 +94,21 @@ class AnggotaController extends Controller
     public function show($id)
     {
         try {
-            // Ambil data buku melalui service
-            $book = $this->bookService->getBookById($id);
+            // Ambil data anggota melalui service
+            $anggota = $this->anggotaService->getAnggotaById($id);
 
             // Return response sukses, format data menggunakan Resource agar konsisten
             return ResponseHelper::success(
-                new BookResource($book),
-                'Berhasil mengambil detail buku',
+                new AnggotaResource($anggota),
+                'Berhasil mengambil detail anggota',
                 Response::HTTP_OK // 200 OK
             );
 
         } catch (ModelNotFoundException $e) {
-            // Tangkap error jika ID buku tidak ada di database
+            // Tangkap error jika ID anggota tidak ada di database
             return ResponseHelper::error(
                 null,
-                'Data buku tidak ditemukan',
+                'Data anggota tidak ditemukan',
                 Response::HTTP_NOT_FOUND // 404 Not Found
             );
 
@@ -114,7 +116,7 @@ class AnggotaController extends Controller
             // Tangkap error sistem lainnya
             return ResponseHelper::error(
                 null,
-                'Gagal mengambil detail buku: ' . $th->getMessage(),
+                'Gagal mengambil detail anggota: ' . $th->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR // 500 Internal Server Error
             );
         }
@@ -127,7 +129,7 @@ class AnggotaController extends Controller
             $data = $request->validated(); 
             
             // Panggil service untuk memproses pembaruan data dan file gambar
-            $book = $this->bookService->updateBook($id, $data);
+            $book = $this->anggotaService->updateBook($id, $data);
 
             return ResponseHelper::success(
                 new BookResource($book),
@@ -148,12 +150,12 @@ class AnggotaController extends Controller
     {
         try {
             // Eksekusi proses penghapusan melalui service
-            $this->bookService->deleteBook($id);
+            $this->anggotaService->deleteAnggota($id);
 
             // Kembalikan response sukses (data null karena ini aksi delete)
             return ResponseHelper::success(
                 null,
-                'Berhasil menghapus data buku',
+                'Berhasil menghapus data anggota',
                 Response::HTTP_OK // 200 OK
             );
 
@@ -161,7 +163,7 @@ class AnggotaController extends Controller
             // Handle spesifik jika failOrFail() tidak menemukan data
             return ResponseHelper::error(
                 null,
-                'Data buku tidak ditemukan',
+                'Data anggota tidak ditemukan',
                 Response::HTTP_NOT_FOUND // 404 Not Found
             );
 
@@ -169,7 +171,7 @@ class AnggotaController extends Controller
             // Handle jika terjadi error lain (misal: database down, foreign key constraint, dll)
             return ResponseHelper::error(
                 null,
-                'Gagal menghapus data buku: ' . $th->getMessage(),
+                'Gagal menghapus data anggota: ' . $th->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR // 500 Internal Server Error
             );
         }

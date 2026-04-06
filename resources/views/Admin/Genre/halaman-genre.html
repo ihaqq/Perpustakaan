@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Genre - SIPERPUS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles & Variables */
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+         :root {
+            --primary-color: #5c6ac4;
+            --secondary-color: #f4f6fc;
+            --text-color: #333;
+            --card-bg: #fff;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        body {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+        /* Navbar Style */
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding: 15px 20px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-left h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+        
+        #sidebar-toggle {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            margin-right: 20px;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .user-profile .fa-user-circle {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+        /* Content & Card */
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .card-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        /* Controls (Search & Buttons) */
+        
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+        
+        .search-wrapper i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        #genreSearch {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-filter {
+            padding: 10px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            cursor: pointer;
+            color: #555;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .btn-filter:hover {
+            background-color: #f0f0f0;
+            border-color: var(--primary-color);
+        }
+        
+        .btn-filter.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .btn-add {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-color);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            line-height: 1.6;
+        }
+        
+        .btn-add:hover {
+            background-color: #4b59b1;
+        }
+        
+        .btn-add i {
+            margin-right: 8px;
+        }
+        /* Table Styles - Disamakan dengan Halaman Buku */
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            /* WAJIB ada agar persentase di th dipatuhi */
+            min-width: 900px;
+        }
+        
+        thead th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+            color: #555;
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        td {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            vertical-align: middle;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            /* Garis pembatas utama */
+            height: auto;
+            /* Memastikan tinggi mengikuti konten */
+        }
+        
+        tbody tr:hover {
+            background-color: #f9f9f9;
+            /* Efek hover saat baris disorot */
+        }
+        /* Action Buttons */
+        
+        .action-icons {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        td:last-child {
+            text-align: center;
+        }
+        
+        .btn-edit {
+            background-color: #eef1ff;
+            color: var(--primary-color);
+        }
+        
+        .btn-edit:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-delete {
+            background-color: #fff0f0;
+            color: #f04438;
+        }
+        
+        .btn-delete:hover {
+            background-color: #f04438;
+            color: white;
+        }
+        
+        .deskripsi-text {
+            font-size: 0.9rem;
+            color: #000;
+            /* Diubah dari #666 menjadi hitam pekat agar lebih jelas */
+            line-height: 1.5;
+        }
+        
+        td strong {
+            display: inline-block;
+            max-width: 200px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main class="main-content">
+            <header class="navbar">
+                <div class="header-left">
+                    <i id="sidebar-toggle" class="fas fa-bars"></i>
+                    <h1>Daftar Genre</h1>
+                </div>
+                <div class="header-right">
+                    <i class="fas fa-bell"></i>
+                    <div class="user-profile">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                </div>
+            </header>
+
+            <section class="content">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Semua Genre Buku</h3>
+                        <button class="btn-add"><i class="fas fa-plus"></i>Tambah Genre</button>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="controls-row">
+                            <div class="search-wrapper">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="genreSearch" placeholder="Cari Genre...">
+                            </div>
+                            <div class="filter-buttons">
+                                <button class="btn-filter active">Semua Genre</button>
+                                <button class="btn-filter">Fiksi</button>
+                                <button class="btn-filter">Non-fiksi</button>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5%;">No</th>
+                                        <th style="width: 20%;">Nama Genre</th>
+                                        <th style="width: 15%;">Kategori Buku</th>
+                                        <th style="width: 50%;">Deskripsi Genre</th>
+                                        <th style="width: 10%; text-align: center;">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="genreTableBody">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const dataGenre = [{
+            id: 1,
+            nama: "Fantasi",
+            kategori: "Fiksi",
+            badge: "badge-fiksi",
+            deskripsi: "Cerita yang melibatkan sihir, dunia imajiner, mitologi, atau unsur supranatural.Cerita yang melibatkan sihir, dunia imajiner, mitologi, atau unsur supranatural.."
+        }, {
+            id: 2,
+            nama: "Biografi",
+            kategori: "Non-fiksi",
+            badge: "badge-nonfiksi",
+            deskripsi: "Kisah hidup seseorang yang ditulis oleh orang lain secara mendalam."
+        }, {
+            id: 3,
+            nama: "Misteri",
+            kategori: "Fiksi",
+            badge: "badge-fiksi",
+            deskripsi: "Fokus pada pemecahan teka-teki, kejahatan, atau pengungkapan rahasia."
+        }, {
+            id: 4,
+            nama: "Sains",
+            kategori: "Non-fiksi",
+            badge: "badge-nonfiksi",
+            deskripsi: "Buku yang membahas temuan ilmiah, teori, dan fakta alam semesta."
+        }, {
+            id: 5,
+            nama: "Romansa",
+            kategori: "Fiksi",
+            badge: "badge-fiksi",
+            deskripsi: "Kisah yang fokus pada hubungan emosional dan perjalanan cinta antar tokoh, menghadirkan nuansa kasih sayang, pengorbanan, serta akhir yang menyentuh."
+        }, {
+            id: 6,
+            nama: "Sejarah",
+            kategori: "Non-fiksi",
+            badge: "badge-nonfiksi",
+            deskripsi: "Catatan peristiwa masa lalu yang disusun secara sistematis dan faktual."
+        }, {
+            id: 7,
+            nama: "Horor",
+            kategori: "Fiksi",
+            badge: "badge-fiksi",
+            deskripsi: "Ditujukan untuk memicu rasa takut, ngeri, dan ketegangan bagi pembaca."
+        }, {
+            id: 8,
+            nama: "Pengembangan Diri",
+            kategori: "Non-fiksi",
+            badge: "badge-nonfiksi",
+            deskripsi: "Buku untuk meningkatkan potensi diri, kesehatan mental, dan produktivitas melalui strategi praktis agar hidup lebih bermakna dan sukses."
+        }, {
+            id: 9,
+            nama: "Petualangan",
+            kategori: "Fiksi",
+            badge: "badge-fiksi",
+            deskripsi: "Menonjolkan perjalanan fisik dan tantangan berbahaya di lokasi asing."
+        }, {
+            id: 10,
+            nama: "Teknologi",
+            kategori: "Non-fiksi",
+            badge: "badge-nonfiksi",
+            deskripsi: "Buku yang mengulas inovasi digital, perkembangan perangkat keras, kecerdasan buatan, hingga tren masa depan yang mengubah cara manusia berinteraksi, bekerja, dan memecahkan masalah di era modern ini."
+        }];
+
+        let currentFilter = "Semua Genre";
+
+        function renderTable(filterKategori = currentFilter, searchText = "") {
+            const tableBody = document.getElementById('genreTableBody');
+            tableBody.innerHTML = '';
+
+            const filteredData = dataGenre.filter(item => {
+                const matchKategori = (filterKategori === "Semua Genre") ||
+                    (item.kategori.toLowerCase() === filterKategori.toLowerCase());
+
+                const matchSearch = item.nama.toLowerCase().includes(searchText.toLowerCase()) ||
+                    item.deskripsi.toLowerCase().includes(searchText.toLowerCase());
+
+                return matchKategori && matchSearch;
+            });
+
+            if (filteredData.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 20px;">Data tidak ditemukan...</td></tr>`;
+                return;
+            }
+
+            filteredData.forEach((item, index) => {
+                const row = `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${item.nama}</strong></td>
+                        <td><span class="badge ${item.badge}">${item.kategori}</span></td>
+                        <td class="deskripsi-text">${item.deskripsi}</td>
+                        <td>
+                            <div class="action-icons">
+                                <button class="btn-action btn-edit" title="Edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn-action btn-delete" title="Hapus"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        }
+
+        const searchInput = document.getElementById('genreSearch');
+        searchInput.addEventListener('input', function() {
+            renderTable(currentFilter, this.value);
+        });
+
+        const filterButtons = document.querySelectorAll('.btn-filter');
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                currentFilter = this.innerText.trim();
+                renderTable(currentFilter, searchInput.value);
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => renderTable());
+    </script>
+</body>
+
+</html>

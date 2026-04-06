@@ -1,28 +1,28 @@
 <?php
 namespace App\Services;
 
-use App\Repositories\BookRepository;
+use App\Repositories\AnggotaRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class AnggotaService
 {
-    protected $bookRepository;
+    protected $anggotaRepository;
 
-    public function __construct(BookRepository $bookRepository)
+    public function __construct(AnggotaRepository $anggotaRepository)
     {
-        $this->bookRepository = $bookRepository;
+        $this->anggotaRepository = $anggotaRepository;
     }
-    public function getBooks(array $params)
+    public function getAnggota(array $params)
     {
-        $query = $this->bookRepository->getBooksWithQuery($params);
+        $query = $this->anggotaRepository->getAnggotaWithQuery($params);
         
         return $query;
     }
-    public function getBookById($id)
+    public function getAnggotaById($id)
     {
-        return $this->bookRepository->find($id);
+        return $this->anggotaRepository->find($id);
     }
 
     public function createBook(array $data)
@@ -85,21 +85,21 @@ class AnggotaService
             return $this->bookRepository->update($id, $data);
         });
     }
-    public function deleteBook($id)
+    public function deleteAnggota($id)
     {
-        // 1. Ambil data buku HANYA untuk mendapatkan path file cover-nya
-        $book = $this->bookRepository->findById($id);
+        // 1. Ambil data anggota HANYA untuk mendapatkan path file cover-nya
+        $anggota = $this->anggotaRepository->findById($id);
 
         // 2. Lakukan proses hapus data di database dalam transaction
         // (Berjaga-jaga jika di masa depan buku ini memiliki banyak relasi tabel yang harus ikut dihapus)
         DB::transaction(function () use ($id) {
-            $this->bookRepository->delete($id);
+            $this->anggotaRepository->delete($id);
         });
 
         // 3. JIKA database berhasil dihapus, hapus file cover dari storage
         // Pengecekan dilakukan agar tidak terjadi error jika data lama tidak punya cover
-        if ($book->cover && Storage::disk('public')->exists($book->cover)) {
-            Storage::disk('public')->delete($book->cover);
+        if ($anggota->cover && Storage::disk('public')->exists($anggota->cover)) {
+            Storage::disk('public')->delete($anggota->cover);
         }
 
         return true;

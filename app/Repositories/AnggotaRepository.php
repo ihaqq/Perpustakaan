@@ -2,79 +2,92 @@
 
 namespace App\Repositories;
 
-use App\Models\Book;
+use App\Models\Anggota;
 use App\RepositoriesInterface\AnggotaRepositoryInterface;
 
 class AnggotaRepository implements AnggotaRepositoryInterface
 {
     public function all()
     {
-        // Menggunakan Eloquent untuk mengambil semua data book
-        return Book::all();
+        // Menggunakan Eloquent untuk mengambil semua data anggota
+        return Anggota::all();
     }
 
     public function find($id)
     {
-        return Book::findOrFail($id);
+        return Anggota::findOrFail($id);
     }
     public function findById($id)
     {
         // failOrFail akan otomatis melempar ModelNotFoundException jika ID tidak ada (ditangkap oleh Controller)
-        return Book::findOrFail($id);
+        return Anggota::findOrFail($id);
     }
     public function create(array $data)
     {
-        return Book::create($data);
+        return Anggota::create($data);
     }
 
     public function update($id, array $data)
     {
         // reuse method findById
-        $book = $this->findById($id);
-        $book->update($data);
+        $anggota = $this->findById($id);
+        $anggota->update($data);
         
-        return $book;
+        return $anggota;
     }
 
     public function delete($id)
     {
-        $book = $this->findById($id);
-        return $book->delete();
+        $anggota = $this->findById($id);
+        return $anggota->delete();
     }
     
-    public function getBooksWithQuery(array $params)
+    public function getAnggotaWithQuery(array $params)
     {
-        $query = Book::query();
+        // with(['user', 'kelas']) untuk Eager Loading. 
+        // agar query tidak (N+1 problem) saat resource memanggil data relasi.
+        $query = Anggota::with(['user', 'kelas']);
 
         // Search
         if (!empty($params['search'])) {
             $search = $params['search'];
             $query->where(function ($q) use ($search) {
-                $q->where('judul', 'like', "%$search%")
-                ->orWhere('kode_buku', 'like', "%$search%");
+                // Cari berdasarkan nomor_induk di tabel anggota
+                $q->where('nomor_induk', 'like', "%$search%")
+                  // PERBAIKAN: Gunakan orWhereHas untuk mencari berdasarkan nama di relasi 'user'
+                  ->orWhereHas('user', function ($userQuery) use ($search) {
+                      $userQuery->where('nama', 'like', "%$search%");
+                  });
             });
         }
 
-        // Filter
-        if (!empty($params['genre_id'])) {
-            $query->where('genres_id', $params['genre_id']);
+        // Filter status (Tadi di controller ada 'status', tapi di repo belum dimasukkan)
+        if (!empty($params['status'])) {
+            $query->where('status', $params['status']);
         }
 
-        if (!empty($params['tahun'])) {
-            $query->where('tahun_terbit', $params['tahun']);
+        // Filter kelas_id
+        if (!empty($params['kelas_id'])) {
+            $query->where('kelas_id', $params['kelas_id']);
         }
 
-        // Filter Stok
-        if (!empty($params['stok'])) {
-            $kategoriStok = strtolower($params['stok']);
+        // filter jurusan (berdasarkan jurusan di relasi 'kelas')
+        if (!empty($params['jurusan'])) {
+            $query->whereHas('kelas', function ($kelasQuery) use ($params) {
+                $kelasQuery->where('jurusan', 'like', "%{$params['jurusan']}%");
+            });
+        }
+        
+        // Filter kelas (berdasarkan nama kelas di relasi 'kelas')
+        if (!empty($params['kelas'])) {
+            $query->whereHas('kelas', function ($kelasQuery) use ($params) {
+                $kelasQuery->where('nama_kelas', 'like', "%{$params['kelas']}%");
+            });
+        }
 
-            if ($kategoriStok == 'high') {
-                $query->where('stok','>=', '5');
-            } elseif ($kategoriStok == 'low') {
-                $query->where('stok', [1, 4]);
-            } elseif ($kategoriStok == 'empty') {
-                $query->where('stok', '<=','0');
-            }
+        // Filter kategori
+        if (!empty($params['kategori'])) {
+            $query->where('kategori', $params['kategori']);
         }
 
         // sortBy
@@ -86,11 +99,5 @@ class AnggotaRepository implements AnggotaRepositoryInterface
         $query->orderBy('created_at', $sortOrder);
 
         return $query;
-    }
-
-    public function getLastBook()
-    {
-        // Mengambil 1 buku terakhir berdasarkan urutan waktu dibuat (created_at)
-        return Book::orderBy('created_at', 'desc')->first();
     }
 }

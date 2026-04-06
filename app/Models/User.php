@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function anggota()
     {
-        return $this->hasMany(Anggota::class, 'id');
+        return $this->hasMany(Anggota::class, 'user_id', 'id');
     }
 }

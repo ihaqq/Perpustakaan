@@ -1,22 +1,22 @@
 <?php
 namespace App\Services;
 
-use App\Repositories\BookRepository;
+use App\Repositories\KelasRepository;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class KelasService
 {
-    protected $bookRepository;
+    protected $kelasRepository;
 
-    public function __construct(BookRepository $bookRepository)
+    public function __construct(KelasRepository $kelasRepository)
     {
-        $this->bookRepository = $bookRepository;
+        $this->kelasRepository = $kelasRepository;
     }
-    public function getBooks(array $params)
+    public function getKelas(array $params)
     {
-        $query = $this->bookRepository->getBooksWithQuery($params);
+        $query = $this->kelasRepository->getKelasWithQuery($params);
         
         return $query;
     }

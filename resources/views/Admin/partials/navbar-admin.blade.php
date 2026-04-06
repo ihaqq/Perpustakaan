@@ -25,7 +25,7 @@
                         </a>
                         <ul class="submenu" style="{{ request()->routeIs('daftar-anggota') || request()->routeIs('tambah-anggota') ? 'display: block;' : ''}}">
                             <li class="{{ request()->routeIs('daftar-anggota') ? 'active' : ''}}"><a href="{{route('daftar-anggota')}}"><i class="fas fa-list"></i>Daftar Anggota</a></li>
-                            <li class="{{ request()->routeIs('tambah-anggota') ? 'active' : ''}}"><a href="{{route('tambah-anggota')}}"><i class="fas fa-user-plus"></i>Tambah Anggota</a></li>
+                            <li class="{{ request()->routeIs('tambah-anggota') ? 'active' : ''}}"><a href="{{route('konfirmasi-pengguna')}}"><i class="fas fa-user-plus"></i>Konfirmasi Pengguna</a></li>
                         </ul>
                     </li>
                     <li class="{{ request()->routeIs('halaman-buku') || request()->routeIs('kategori-buku') ? 'active' : ''}}">
@@ -35,8 +35,8 @@
                             <i class="fas fa-caret-down"></i>
                         </a>
                         <ul class="submenu" style="{{ request()->routeIs('halaman-buku') || request()->routeIs('kategori-buku') ? 'display: block;' : ''}}">
-                            <li class="{{ request()->routeIs('halaman-buku') ? 'active' : ''}}"><a href="{{ route('halaman-buku') }}"><i class="fas fa-book-open"></i>Daftar Buku</a></li>
-                            <li class="{{ request()->routeIs('kategori-buku') ? 'active' : ''}}"><a href="#"><i class="fas fa-tags"></i>Kategori</a></li>
+                            <li class="{{ request()->routeIs('halaman-buku') ? 'active' : ''}}"><a href="{{ route('daftar-buku') }}"><i class="fas fa-book-open"></i>Daftar Buku</a></li>
+                            <li class="{{ request()->routeIs('kategori-buku') ? 'active' : ''}}"><a href="{{ route('daftar-genre') }}"><i class="fas fa-tags"></i>Daftar Genre</a></li>
                         </ul>
                     </li>
                     <li class="{{ request()->routeIs('daftar-antrian') || request()->routeIs('konfirmasi-ketersediaan') ? 'active' : ''}}">
