@@ -18,6 +18,8 @@ export default defineConfig({
                     // css sidebar
                     'resources/css/admin/sidebar/sidebar_tes.css',
                     'resources/css/admin/sidebar/sidebar.css',
+                    // css genre
+                    'resources/css/admin/genre/daftar_genre.css',
                     // css riwayat transaksi
                     'resources/css/admin/transaksi/riwayat_transaksi/halaman_riwayat_transaksi.css',
                     'resources/css/admin/transaksi/riwayat_transaksi/detail_riwayat/detail_riwayat.css',
@@ -32,6 +34,8 @@ export default defineConfig({
                     // js dashboard
                     'resources/js/admin/dashboard/dashboard_copy.js',
                     'resources/js/admin/dashboard/dashboard.js',
+                    // js genre
+                    'resources/js/admin/genre/daftar_genre.js',
                     // js navbar
                     'resources/js/admin/navbar/navbar_copy.js',
                     'resources/js/admin/navbar/navbar.js',

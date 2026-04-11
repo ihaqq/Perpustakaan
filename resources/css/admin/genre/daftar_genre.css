@@ -1,0 +1,960 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", sans-serif;
+}
+
+:root {
+    --primary-color: #5c6ac4;
+    --secondary-color: #f8f9fa;
+    --text-color: #2c3e50;
+    --text-light: #6c757d;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #495057;
+    --sidebar-active-bg: #e3f2fd;
+    --card-bg: #ffffff;
+    --border-radius: 16px;
+    --cancel-btn-color: #cccccc;
+    --error-color: #e74c3c; /* Warna Merah untuk indikasi gagal */
+    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4c63d2;
+}
+
+/* Main Content & Navbar */
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#sidebar-toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-right: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left h1 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-right .fa-bell {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: relative;
+}
+
+.header-right .fa-bell::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #ff4757;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.header-right .fa-bell:hover {
+    background: var(--sidebar-active-bg);
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.notification-bell {
+    position: relative;
+    animation: bell-ring 2s infinite;
+}
+
+@keyframes bell-ring {
+    0%,
+    50%,
+    100% {
+        transform: rotate(0deg);
+    }
+    10%,
+    30% {
+        transform: rotate(-10deg);
+    }
+    20%,
+    40% {
+        transform: rotate(10deg);
+    }
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 6px;
+    border-radius: 12px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.user-profile:hover {
+    background: var(--sidebar-active-bg);
+}
+
+.user-profile .fa-user-circle {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+}
+
+.user-profile span {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.card-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* Content & Card */
+/* Controls (Search & Buttons) */
+.controls-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+    font-size: 0.9rem;
+}
+
+#genreSearch {
+    width: 100%;
+    padding: 10px 10px 10px 38px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    background-color: #fff;
+}
+
+#genreSearch:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.15);
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-filter {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #555;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.btn-filter:hover {
+    background-color: #f0f0f0;
+    border-color: var(--primary-color);
+}
+
+.btn-filter.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.btn-add {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    display: inline-block;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    line-height: 1.6;
+}
+
+.btn-add:hover {
+    background-color: #4b59b1;
+}
+
+.btn-add i {
+    margin-right: 8px;
+}
+/* Table Styles - Disamakan dengan Halaman Buku */
+
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Memastikan tabel bisa digeser ke samping di layar kecil */
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid #edf2f9;
+
+}
+
+.table-container h4 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    table-layout: fixed;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+td {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    vertical-align: middle;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    /* Garis pembatas utama */
+    height: auto;
+    /* Memastikan tinggi mengikuti konten */
+}
+
+th,
+td {
+    text-align: left;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.text-wrap-2-lines {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+/* Action Buttons */
+
+.action-icons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-action {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.3s;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+}
+
+td:last-child {
+    text-align: center;
+}
+
+.btn-edit {
+    background-color: #eef1ff;
+    color: var(--primary-color);
+}
+
+.btn-edit:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-delete {
+    background-color: #fff0f0;
+    color: #f04438;
+}
+
+.btn-delete:hover {
+    background-color: #f04438;
+    color: white;
+}
+
+.deskripsi-text {
+    font-size: 0.9rem;
+    color: #000;
+    /* Diubah dari #666 menjadi hitam pekat agar lebih jelas */
+    line-height: 1.5;
+}
+
+td strong {
+    display: inline-block;
+    max-width: 200px;
+    word-wrap: break-word;
+}
+
+/*  Pagination Styles  */
+.pagination-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 25px;
+    gap: 8px;
+}
+
+.page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 38px;
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 8px; /* Menyesuaikan dengan border-radius tombol lain */
+    border: 1px solid #e0e0e0;
+    background-color: #fff;
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
+    user-select: none;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: var(--sidebar-active-bg);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* State ketika halaman sedang aktif */
+.page-btn.active {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(92, 106, 196, 0.3); /* Sedikit efek shadow ala tombol primary */
+}
+
+/* State untuk tombol Previous/Next jika sedang di ujung halaman */
+.page-btn:disabled,
+.page-btn.disabled {
+    background-color: #f9f9f9;
+    color: #bbb;
+    border-color: #eee;
+    cursor: not-allowed;
+}
+
+/* --- Styling Khusus Modal Add Genre --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px); /* Efek blur ala referensi */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 32rem; /* setara max-w-lg */
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    animation: pop-in 0.3s ease-out forwards;
+}
+
+.modal-header {
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.modal-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.modal-icon-box {
+    width: 2.25rem;
+    height: 2.25rem;
+    background-color: #eef2ff;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    border: 1px solid #e0e7ff;
+}
+
+.modal-icon {
+    font-size: 20px;
+    color: var(--primary-color);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-card:hover .modal-icon {
+    transform: rotate(-10deg) scale(1.15);
+}
+.modal-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #5c6ac4;
+}
+.modal-subtitle {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 0.25rem;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #5c6ac4;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    font-size: 14px;
+    color: #374151;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    transition: all 0.2s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #5c6ac4;
+    box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.2);
+    background-color: #fff;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+select.form-input {
+    /* Menghilangkan panah bawaan browser */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Mengganti dengan icon panah SVG */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236c757d'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+
+    /* Posisi icon: di kanan, jarak 1rem dari tepi, center secara vertikal */
+    background-position: right 1rem center;
+    background-size: 1.25rem;
+
+    /* Memberikan ruang ekstra di sebelah kanan agar teks opsi tidak menabrak icon */
+    padding-right: 2.75rem;
+}
+
+/* Perbaikan khusus untuk select yang sedang disabled/readonly (opsional) */
+select.form-input:disabled {
+    background-color: #e5e7eb;
+    cursor: not-allowed;
+}
+
+.form-input.input-error {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.error-msg {
+    color: #ef4444;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+    display: none;
+}
+
+.char-counter-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+.char-limit-warn {
+    font-size: 11px;
+    font-weight: 600;
+    color: #ef4444;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.char-counter-text {
+    font-size: 11px;
+    color: #9ca3af;
+    text-align: right;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    padding-top: 1.5rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid #f3f4f6;
+}
+
+.btn-action-modal {
+    padding: 0.625rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 14px;
+    font-weight: 700;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+.btn-action-modal:active {
+    transform: scale(0.95);
+}
+.btn-batal {
+    background-color: #f3f4f6;
+    color: #4b5563;
+    border: none;
+}
+.btn-batal:hover {
+    background-color: #e5e7eb;
+}
+.btn-simpan {
+    background-color: #5c6ac4;
+    color: #ffffff;
+    border: none;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+.btn-simpan:hover {
+    background-color: #4f5bb5;
+}
+.btn-simpan:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.hidden {
+    display: none !important;
+}
+@keyframes pop-in {
+    0% {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ===== Delete Modal ===== */
+.modal-confirm {
+    background: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-confirm h4 {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.modal-confirm p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.modal-overlay.active .modal-confirm {
+    transform: scale(1);
+}
+
+.modal-confirm-fail {
+    background: white;
+    padding: 40px;
+    border-radius: var(--border-radius);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-confirm-fail h4 {
+    color: var(--error-color);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+.modal-confirm-fail p {
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.modal-overlay.active .modal-confirm-fail {
+    transform: scale(1);
+}
+
+.icon-box {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 4px solid var(--primary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-blue 2s infinite;
+}
+
+@keyframes pulse-blue {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(92, 106, 196, 0.4);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(92, 106, 196, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(92, 106, 196, 0);
+    }
+}
+
+.icon-box i {
+    color: var(--primary-color);
+    font-size: 40px;
+}
+
+.icon-box-modal-fail {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    border: 4px solid var(--error-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: pulse-red 2s infinite;
+}
+
+.icon-box-modal-fail i {
+    color: var(--error-color);
+    font-size: 40px;
+}
+
+@keyframes pulse-red {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(231, 76, 60, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+    }
+}
+
+.confirm-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-cancel {
+    background-color: transparent;
+    color: #777;
+    border: 2px solid var(--cancel-btn-color);
+}
+.btn-cancel:hover {
+    background-color: var(--cancel-btn-color);
+    transform: translateY(-1px);
+    color: white;
+    box-shadow: 0 6px 14px rgba(92, 106, 196, 0.4);
+}
+
+.modal-footer .btn-cancel {
+    background-color: transparent;
+    color: #777;
+    border: 2px solid var(--cancel-btn-color);
+    padding: 10px 32px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.modal-footer .btn-cancel:hover {
+    background-color: var(--cancel-btn-color);
+    color: white;
+}
+
+.modal-footer .btn-cancel:active {
+    transform: scale(0.96);
+}
+
+.modal-footer .btn-save {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 40px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(92, 106, 196, 0.3);
+    transition: all 0.2s;
+}
+
+.modal-footer .btn-save:hover {
+    background-color: #4a57a8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(92, 106, 196, 0.4);
+}
+
+.modal-footer .btn-save:active {
+    transform: scale(0.96);
+}
+
+.btn-confirm {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(92, 106, 196, 0.3);
+    transition: all 0.2s;
+}
+
+.btn-confirm:hover {
+    background-color: #4a57a8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(92, 106, 196, 0.4);
+}
+
+.btn-confirm:active {
+    transform: scale(0.96);
+}
+
+.btn-success {
+    background-color: var(--primary-color);
+    color: white;
+    border: 2px solid var(--primary-color);
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-success:hover {
+    background-color: #4a57a8;
+    border-color: #4a57a8;
+}
+.btn-fail {
+    background-color: var(--error-color);
+    color: white;
+    border: 2px solid var(--error-color);
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.btn-fail:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+@keyframes pulse-indigo {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(92, 106, 196, 0.4);
+    }
+    70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 15px rgba(92, 106, 196, 0);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(92, 106, 196, 0);
+    }
+}

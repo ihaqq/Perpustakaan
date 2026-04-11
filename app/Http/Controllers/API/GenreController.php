@@ -4,17 +4,19 @@ namespace App\Http\Controllers\API;
 use App\Helpers\PaginationHelper;
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\GenreStoreRequest;
 use App\Http\Resources\BookResource;
 use App\Http\Resources\GenreResource;
 use App\Services\GenreService;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class GenreController extends Controller
 {
     protected $genreService;
-    
+
     public function __construct(GenreService $genreService)
     {
         $this->genreService = $genreService;
@@ -25,7 +27,8 @@ class GenreController extends Controller
             $params = $request->only([
                 'search',
                 'kategori',
-                'per_page'
+                'per_page',
+                'sort_order'
             ]);
 
             $query = $this->genreService->getGenrePaginate($params);
@@ -69,7 +72,6 @@ class GenreController extends Controller
             return ResponseHelper::success(
                 [
                     'Genres' => GenreResource::collection($genres),
-                    // Hapus 'meta' karena ini bukan pagination
                 ],
                 'Berhasil mengambil semua data genre'
             );
@@ -84,8 +86,36 @@ class GenreController extends Controller
 
     public function store(GenreStoreRequest $request)
     {
-        $data = $request->only(['nama_genre', 'kategori_buku', 'deskripsi']);
-        return response()->json($this->genreService->createGenre($data));
+        try {
+            // Mengambil SEMUA data yang sudah tervalidasi di BookStoreRequest
+            $data = $request->validated();
+
+            // Panggil service untuk memproses pembuatan buku dan upload file
+            $book = $this->genreService->createGenre($data);
+
+            // Return response sukses menggunakan ResponseHelper
+            return ResponseHelper::success(
+                new GenreResource($book),
+                'Genre berhasil ditambahkan',
+                Response::HTTP_CREATED // 201 Created (Standar untuk resource baru)
+            );
+
+        } catch (QueryException $e) {
+            // Error yang berkaitan dengan database (misal: gagal insert)
+            return ResponseHelper::error(
+                null,
+                'Terjadi kesalahan pada database: ' . $e->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+
+        } catch (\Throwable $th) {
+            // Tangkap error sistem lainnya
+            return ResponseHelper::error(
+                null,
+                'Gagal menambahkan genre: ' . $th->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
     }
 
     public function show($id)
@@ -96,7 +126,7 @@ class GenreController extends Controller
 
             // Return response sukses, format data menggunakan Resource agar konsisten
             return ResponseHelper::success(
-                new BookResource($book),
+                new GenreResource($book),
                 'Berhasil mengambil detail genre',
                 Response::HTTP_OK // 200 OK
             );
@@ -118,10 +148,28 @@ class GenreController extends Controller
             );
         }
     }
-    public function update(GenreUpdateRequest $request, $id)
+    public function update(GenreStoreRequest $request, $id)
     {
-        $data = $request->only(['nama_genre', 'kategori_buku', 'deskripsi']);
-        return response()->json($this->genreService->updateGenre($id, $data));
+        try {
+            // Gunakan validated() agar lebih aman dari mass-assignment vulnerability
+            $data = $request->validated();
+
+            // Panggil service untuk memproses pembaruan data dan file gambar
+            $book = $this->genreService->updateGenre($id, $data);
+
+            return ResponseHelper::success(
+                new GenreResource($book),
+                'Genre berhasil diperbarui',
+                Response::HTTP_OK
+            );
+
+        } catch (ModelNotFoundException $e) {
+            return ResponseHelper::error(null, 'Data genre tidak ditemukan', Response::HTTP_NOT_FOUND);
+        } catch (QueryException $e) {
+            return ResponseHelper::error(null, 'Terjadi kesalahan pada database: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Throwable $th) {
+            return ResponseHelper::error(null, 'Gagal memperbarui genre: ' . $th->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function destroy($id)

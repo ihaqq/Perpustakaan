@@ -50,7 +50,7 @@ Route::get('/perbaikan-halaman-buku', function () {
     return view('Admin/buku/perbaikan_tabel_buku/perbaikan_buku');
 })      -> name('perbaikan-halaman-buku');
 Route::get('/daftar-genre', function () {
-    return view('Admin/Genre/halaman-genre');
+    return view('Admin/genre/daftar_genre');
 })      -> name('daftar-genre');
 Route::get('/tambah-buku', function () {
     return view('Admin/buku/tambah_buku');

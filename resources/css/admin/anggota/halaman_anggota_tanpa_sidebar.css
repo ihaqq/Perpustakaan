@@ -67,13 +67,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 32px;
-    padding: 20px 28px;
-    background: var(--card-bg);
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
     border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 #sidebar-toggle {
@@ -97,7 +95,7 @@ body {
 }
 
 .header-left h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--primary-color);
     font-weight: 700;
 }
@@ -105,7 +103,7 @@ body {
 .header-right {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .header-right .fa-bell {
@@ -196,10 +194,11 @@ body {
 
 /* ===== styling Table ====*/
 .table-container {
+    margin-top: 20px;
     overflow-x: auto;
     background-color: var(--card-bg);
     border-radius: var(--border-radius);
-    border: 1px solid #edf2f9; /* Memberikan batas halus pada tabel */
+    border: 1px solid #edf2f9;
 }
 
 table {
@@ -225,20 +224,20 @@ table {
 
 th,
 td {
-    padding: 14px 12px; /* Disesuaikan agar proporsional, tidak terlalu tebal */
+    padding: 15px 10px; /* Disesuaikan agar proporsional, tidak terlalu tebal */
     border-bottom: 1px solid #edf2f9;
     vertical-align: middle;
-    color: var(--text-color);
+    /* color: var(--text-color); */
 }
 
 thead th {
     text-align: left;
     background-color: #f8fafc;
     font-weight: 600;
-    color: var(--text-light);
+    color: var(--text-color);
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.8px;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
     border-bottom: 2px solid #e2e8f0;
 }
 
@@ -369,12 +368,14 @@ td {
 .badge-pelajar {
     background-color: #e3f2fd; /* Biru muda */
     color: #1976d2; /* Biru tua */
+    text-transform: uppercase;
 }
 
 /* Kategori Guru (Ungu) */
 .badge-guru {
     background-color: #f3e8ff; /* Ungu muda */
     color: #7e22ce; /* Ungu tua */
+    text-transform: uppercase;
 }
 
 /* Filter Controls */

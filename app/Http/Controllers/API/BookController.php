@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BookController extends Controller
 {
     protected $bookService;
-    
+
     public function __construct(BookService $bookService)
     {
         $this->bookService = $bookService;
@@ -124,8 +124,8 @@ class BookController extends Controller
     {
         try {
             // Gunakan validated() agar lebih aman dari mass-assignment vulnerability
-            $data = $request->validated(); 
-            
+            $data = $request->validated();
+
             // Panggil service untuk memproses pembaruan data dan file gambar
             $book = $this->bookService->updateBook($id, $data);
 

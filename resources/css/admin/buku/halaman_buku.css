@@ -76,7 +76,15 @@ body {
     font-size: 1.5rem;
     cursor: pointer;
     color: var(--primary-color);
-    margin-right: 20px;
+    margin-right: 24px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+#sidebar-toggle:hover {
+    background: var(--sidebar-active-bg);
+    transform: scale(1.1);
 }
 
 .header-left {
@@ -199,12 +207,8 @@ body {
     overflow-x: auto; /* Memastikan tabel bisa digeser ke samping di layar kecil */
     background-color: var(--card-bg);
     border-radius: 8px;
-}
+    border: 1px solid #edf2f9;
 
-.table-container h4 {
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 10px;
 }
 
 table {
@@ -212,6 +216,12 @@ table {
     border-collapse: collapse;
     min-width: 800px;
     table-layout: fixed;
+}
+
+.table-container h4 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
 }
 
 th,
