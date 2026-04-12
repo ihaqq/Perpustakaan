@@ -17,7 +17,7 @@ return new class extends Migration
             $table->dateTime('tenggat_kembali')->nullable();
             $table->dateTime('tanggal_kembali')->nullable();
             $table->integer('denda')->default(0);
-            $table->enum('status', ['MENUNGGU_DIAMBIL', 'DIPINJAM', 'KEMBALI', 'TERLAMBAT', 'DIBATALKAN'])->nullable();
+            $table->enum('status', ['MENUNGGU_DIAMBIL', 'DIPINJAM', 'KEMBALI', 'TERLAMBAT', 'DIBATALKAN', 'SELESAI'])->nullable();
             $table->timestamps();
         });
     }

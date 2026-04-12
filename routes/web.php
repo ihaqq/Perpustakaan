@@ -30,18 +30,9 @@ Route::get('/detail-anggota', function () {
 Route::get('/daftar-buku', function () {
     return view('Admin/buku/halaman_buku');
 })      -> name('daftar-buku');
-Route::get('/perbaikan-halaman-buku', function () {
-    return view('Admin/buku/perbaikan_tabel_buku/perbaikan_buku');
-})      -> name('perbaikan-halaman-buku');
 Route::get('/daftar-genre', function () {
     return view('Admin/genre/daftar_genre');
 })      -> name('daftar-genre');
-Route::get('/tambah-buku', function () {
-    return view('Admin/buku/tambah_buku');
-})      -> name('tambah-buku');
-Route::get('/edit-buku', function () {
-    return view('Admin/buku/edit_buku');
-})      -> name('edit-buku');
 
 // route admin Antrian
 Route::get('/daftar-antrian', function () {
@@ -50,9 +41,6 @@ Route::get('/daftar-antrian', function () {
 Route::get('/daftar-pengambilan', function () {
     return view('Admin/pengambilan/daftar_pengambilan');
 })      -> name('daftar-pengambilan');
-Route::get('/konfirmasi-peminjaman', function () {
-    return view('Admin/antrian/konfirmasi_peminjaman');
-})      -> name('konfirmasi-peminjaman');
 
 // route admin transaksi
 Route::get('/daftar-peminjaman', function () {
@@ -61,14 +49,9 @@ Route::get('/daftar-peminjaman', function () {
 Route::get('/daftar-pengembalian', function () {
     return view('Admin/transaksi/daftar_pengembalian');
 })      -> name('daftar-pengembalian');
-
-// route admin riwayat transaksi
 Route::get('/riwayat-transaksi', function () {
-    return view('Admin/transaksi/riwayat_transaksi/riwayat_transaksi');
+    return view('Admin/riwayat_transaksi/halaman_riwayat_transaksi');
 })      -> name('riwayat-transaksi');
-Route::get('/detail-transaksi', function () {
-    return view('Admin/transaksi/riwayat_transaksi/detail_riwayat/detail_riwayat');
-})      -> name('detail-transaksi');
 
 // route admin Laporan
 Route::get('/statistik-laporan', function () {
