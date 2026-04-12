@@ -1,9 +1,9 @@
 @extends('Admin/Layouts.dashboard')
 
-@section('title', 'Daftar Antrian')
+@section('title', 'Daftar Pengambilan')
 
 @push('styles')
-    @vite('resources/css/admin/antrian/halaman_antrian.css')
+    @vite('resources/css/admin/pengambilan/daftar_pengambilan.css')
     @vite('resources/css/admin/sidebar/sidebar_tes.css')
 @endpush
 
@@ -13,10 +13,8 @@
             <meta name="csrf-token" content="{{ csrf_token() }}">
             <div class="header-left">
                 <i id="sidebar-toggle" class="fas fa-bars"></i>
-                <h1>Daftar Antrian</h1>
+                <h1>Daftar Pengambilan</h1>
             </div>
-
-            <!-- User Profile -->
             <div class="header-right">
                 <i class="fas fa-bell notification-bell"></i>
                 <div class="user-profile">
@@ -25,36 +23,31 @@
             </div>
         </header>
 
-        <!-- Main Content -->
         <section class="content">
             <div class="card">
                 <div class="card-header">
-                    <h3>Semua Daftar Antrian</h3>
+                    <h3>Konfirmasi Pengambilan Buku</h3>
                 </div>
-
-                <!-- Filter Controls -->
                 <div class="card-body">
                     <div class="filter-controls">
                         <div class="search-wrapper">
                             <i class="fas fa-search"></i>
-                            <input type="text" id="antrianSearch" placeholder="Cari Nama Pemesan Atau Judul...">
+                            <input type="text" id="bookingSearch" placeholder="Cari Nama Penerima Atau Judul Buku...">
                         </div>
                     </div>
-
-                    <!-- Struktur tabel -->
                     <div class="table-container">
                         <table>
                             <thead>
                                 <tr>
-                                    <th style="width: 10%; text-align: center;">No Antrian</th>
-                                    <th style="width: 15%;">kode buku</th>
-                                    <th style="width: 22%; text-align: center;">Informasi Buku</th>
-                                    <th style="width: 22%;">Pemesan</th>
-                                    <th style="width: 16%;">Estimasi Ready</th>
+                                    <th style="width: 12%;">ID Booking</th>
+                                    <th style="width: 22%;">Buku</th>
+                                    <th style="width: 22%;">Penerima</th>
+                                    <th style="width: 14%;">Batas Ambil</th>
                                     <th style="width: 15%; text-align: center;">Status</th>
+                                    <th style="width: 15%; text-align: center;">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody id="antrianTableBody">
+                            <tbody id="bookingTableBody">
                             </tbody>
                         </table>
                     </div>
@@ -66,5 +59,5 @@
 
 @endsection
 @push('scripts')
-    @vite('resources/js/admin/antrian/antrian.js')
+    @vite('resources/js/admin/pengambilan/pengambilan.js')
 @endpush

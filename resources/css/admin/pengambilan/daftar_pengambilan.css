@@ -1,0 +1,444 @@
+/* Global Styles & Variables - Mengikuti Halaman Anggota/Antrian */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+:root {
+    --primary-color: #5c6ac4;
+    --secondary-color: #f8f9fa;
+    --text-color: #2c3e50;
+    --text-light: #6c757d;
+    --sidebar-bg: #ffffff;
+    --sidebar-text: #495057;
+    --sidebar-active-bg: #e3f2fd;
+    --card-bg: #ffffff;
+    --border-radius: 16px;
+    --cancel-btn-color: #cccccc;
+    --error-color: #e74c3c;  /* Warna Merah untuk indikasi gagal */
+    --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    --box-shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);;
+
+    /* Warna Aksi Baru */
+    --success-color: #2ecc71; /* Hijau Selaras */
+    --danger-color: #f04438; /* Merah (Identik dengan Halaman Anggota) */
+}
+
+body {
+    background: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+}
+
+/* Custom Scrollbar */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4c63d2;
+}
+
+/* Main Content & Navbar */
+.main-content {
+    flex: 1;
+    padding: 30px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+#sidebar-toggle {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-right: 24px;
+    padding: 8px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+#sidebar-toggle:hover {
+    background: var(--sidebar-active-bg);
+    transform: scale(1.1);
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.header-left h1 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-right .fa-bell {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 50%;
+    transition: var(--transition);
+    position: relative;
+}
+
+.header-right .fa-bell::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #ff4757;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.header-right .fa-bell:hover {
+    background: var(--sidebar-active-bg);
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.notification-bell {
+    position: relative;
+    animation: bell-ring 2s infinite;
+}
+
+@keyframes bell-ring {
+    0%, 50%, 100% { transform: rotate(0deg); }
+    10%, 30% { transform: rotate(-10deg); }
+    20%, 40% { transform: rotate(10deg); }
+}
+
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 6px;
+    border-radius: 12px;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.user-profile:hover {
+    background: var(--sidebar-active-bg);
+}
+
+.user-profile .fa-user-circle {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+}
+
+.user-profile span {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* --- MAIN CARD --- */
+.card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card Header */
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--secondary-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.card-header h3 {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.card-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+/* --- TOOLS --- */
+/* Filter Controls */
+
+.filter-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-controls .filter-button {
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    cursor: pointer;
+    color: #555;
+    transition:
+        background-color 0.2s,
+        border-color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-controls .filter-button:hover {
+    background-color: #f0f0f0;
+    border-color: var(--primary-color);
+}
+
+.search-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-wrapper i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+}
+
+#bookingSearch {
+    width: 100%;
+    padding: 10px 10px 10px 38px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    background-color: #fff;
+}
+
+#bookingSearch:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.15);
+}
+
+/* --- TABLE STYLE --- */
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto; /* Memastikan tabel bisa digeser ke samping di layar kecil */
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    border: 1px solid #edf2f9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    table-layout: fixed;
+}
+
+.table-container h4 {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 15px 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 0;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* --- Content Styles --- */
+.id-booking {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.info-buku .judul {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+.info-buku .genre {
+    font-size: 12.8px;
+    color: #888;
+    margin-top: 2px;
+    display: block;
+}
+
+.penerima .nama {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    display: block;
+}
+
+.penerima .kontak {
+    font-size: 12.8px;
+    color: #888;
+    margin-top: 2px;
+    display: block;
+}
+
+.batas-ambil {
+    font-size: 16px;
+    font-weight: 600;
+    color: #e74c3c;
+    display: block;
+}
+
+.status-pill {
+    background-color: #ecfdf5;
+    color: #059669;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+/* --- ACTION BUTTONS (PERBAIKAN WARNA) --- */
+.action-btns {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-action {
+    width: 35px; /* Sedikit lebih besar agar sama dengan halaman anggota */
+    height: 35px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none; /* Hapus border default */
+    font-size: 1rem;
+    transition: all 0.3s;
+}
+
+/* Tombol Centang (Hijau Selaras) */
+.btn-check {
+    background-color: #e6f9ed; /* Background hijau muda transparan */
+    color: var(--success-color);
+}
+.btn-check:hover {
+    background-color: var(--success-color);
+    color: white;
+}
+
+/* Tombol Silang (Merah Anggota) */
+.btn-cross {
+    background-color: #fff0f0; /* Background merah muda transparan (seperti halaman anggota) */
+    color: var(--danger-color);
+}
+.btn-cross:hover {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+.pagination-info {
+    font-size: 0.9rem;
+    color: #666;
+}
+.pagination-btns {
+    display: flex;
+    gap: 5px;
+}
+.btn-page {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.2s;
+}
+.btn-page.active {
+    background-color: #5c6ac4; /* Warna Indigo sesuai tema */
+    color: #fff;
+    border-color: #5c6ac4;
+}
+.btn-page:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
