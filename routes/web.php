@@ -55,7 +55,7 @@ Route::get('/riwayat-transaksi', function () {
 
 // route admin Laporan
 Route::get('/statistik-laporan', function () {
-    return view('Admin/laporan/statistik_laporan');
+    return view('Admin/statistik_laporan/halaman_laporan_statistik');
 })      -> name('statistik-laporan');
 Route::get('/buku-populer', function () {
     return view('Admin/transaksi/buku_populer');

@@ -62,15 +62,14 @@
                             <li class="{{ request()->routeIs('riwayat-transaksi') ? 'active' : ''}}"><a href="{{route('riwayat-transaksi')}}"><i class="fas fa-history"></i>Riwayat</a></li>
                         </ul>
                     </li>
-                    <li class="{{ request()->routeIs('statistik-laporan') || request()->routeIs('buku-populer') ? 'active' : ''}}">
+                    <li class="{{ request()->routeIs('statistik-laporan') ? 'active' : ''}}">
                         <a href="#" class="menu-toggle">
                             <i class="fas fa-file-alt"></i> 
                             <span>Laporan</span> 
                             <i class="fas fa-caret-down"></i>
                         </a>
-                        <ul class="submenu" style="{{ request()->routeIs('statistik-laporan') || request()->routeIs('buku-populer') ? 'display: block;' : ''}}">
-                            <li class="{{ request()->routeIs('statistik-laporan') ? 'active' : ''}}"><a href="laporan.html"><i class="fas fa-chart-bar"></i>Statistik</a></li>
-                            <li class="{{ request()->routeIs('buku-populer') ? 'active' : ''}}"><a href="#"><i class="fas fa-star"></i>Buku Populer</a></li>
+                        <ul class="submenu" style="{{ request()->routeIs('statistik-laporan') ? 'display: block;' : ''}}">
+                            <li class="{{ request()->routeIs('statistik-laporan') ? 'active' : ''}}"><a href="{{route('statistik-laporan')}}"><i class="fas fa-chart-bar"></i>Statistik</a></li>
                         </ul>
                     </li>
                 </ul>
