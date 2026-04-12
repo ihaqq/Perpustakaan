@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pengambilan - SIPERPUS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles & Variables - Mengikuti Halaman Anggota/Antrian */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --primary-color: #5c6ac4; /* Ungu Indigo */
+            --secondary-color: #f4f6fc;
+            --text-color: #333;
+            --card-bg: #fff;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --accent-orange: #f6ad55;
+            --text-muted: #777;
+            
+            /* Warna Aksi Baru */
+            --success-color: #2ecc71; /* Hijau Selaras */
+            --danger-color: #f04438;  /* Merah (Identik dengan Halaman Anggota) */
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px; 
+            margin: 0 auto;
+        }
+
+        /* --- NAVBAR (Identik) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar-toggle {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            margin-right: 20px;
+        }
+
+        .header-left h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-right .fa-bell {
+            font-size: 1.2rem;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .user-profile .fa-user-circle {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* --- MAIN CARD --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Card Header */
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 18px; 
+            margin-bottom: 20px; 
+        }
+
+        .card-header h3 {
+            font-size: 1.2rem; 
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* --- TOOLS --- */
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        #queueSearch {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        /* --- TABLE STYLE --- */
+        .table-container {
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+            color: #555;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #eee;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 20px 15px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        /* --- Content Styles --- */
+        .id-booking { 
+            font-size: 16px;
+            font-weight: 600; 
+            color: #333; 
+        }
+
+        .info-buku .judul {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            display: block;
+        }
+
+        .info-buku .genre {
+            font-size: 12.8px;
+            color: #888;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .penerima .nama {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            display: block;
+        }
+
+        .penerima .kontak {
+            font-size: 12.8px;
+            color: #888;
+            margin-top: 2px;
+            display: block;
+        }
+
+        .batas-ambil { 
+            font-size: 16px;
+            font-weight: 600;
+            color: #e74c3c;
+            display: block;
+        }
+
+        .status-pill {
+            background-color: #ecfdf5;
+            color: #059669;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        /* --- ACTION BUTTONS (PERBAIKAN WARNA) --- */
+        .action-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .btn-action {
+            width: 35px; /* Sedikit lebih besar agar sama dengan halaman anggota */
+            height: 35px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: none; /* Hapus border default */
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        /* Tombol Centang (Hijau Selaras) */
+        .btn-check { 
+            background-color: #e6f9ed; /* Background hijau muda transparan */
+            color: var(--success-color); 
+        }
+        .btn-check:hover { 
+            background-color: var(--success-color); 
+            color: white; 
+        }
+
+        /* Tombol Silang (Merah Anggota) */
+        .btn-cross { 
+            background-color: #fff0f0; /* Background merah muda transparan (seperti halaman anggota) */
+            color: var(--danger-color); 
+        }
+        .btn-cross:hover { 
+            background-color: var(--danger-color); 
+            color: white; 
+        }
+		
+		.pagination-container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-top: 25px;
+			padding-top: 15px;
+			border-top: 1px solid #eee;
+		}
+		.pagination-info { font-size: 0.9rem; color: #666; }
+		.pagination-btns { display: flex; gap: 5px; }
+		.btn-page {
+			padding: 8px 12px;
+			border: 1px solid #ddd;
+			background: #fff;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 0.85rem;
+			transition: 0.2s;
+		}
+		.btn-page.active { 
+			background-color: #5c6ac4; /* Warna Indigo sesuai tema */
+			color: #fff; 
+			border-color: #5c6ac4; 
+		}
+		.btn-page:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="navbar">
+            <div class="header-left">
+                <i id="sidebar-toggle" class="fas fa-bars"></i>
+                <h1>Daftar Pengambilan</h1>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-bell"></i>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <main class="card">
+            <div class="card-header">
+                <h3>Konfirmasi Pengambilan Buku</h3>
+            </div>
+            
+            <div class="filter-controls">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="queueSearch" placeholder="Cari Nama atau Buku ...">
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 12%;">ID Booking</th>
+                            <th style="width: 22%;">Buku</th>
+                            <th style="width: 22%;">Penerima</th>
+                            <th style="width: 14%;">Batas Ambil</th>
+                            <th style="width: 15%; text-align: center;">Status</th>
+                            <th style="width: 15%; text-align: center;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contentTable">
+                    </tbody>
+                </table>
+            </div>
+			
+			<div class="pagination-container">
+				<div class="pagination-info" id="paginationInfo">
+					</div>
+				<div class="pagination-btns" id="paginationBtns">
+					</div>
+			</div>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+		// 1. Data Master (Data asli)
+		const dataMaster = [
+			{ id: "PO-0001", judul: "Negeri 5 Menara", genre: "Fiksi", nama: "Dinda Permata", telp: "0854-1277-9524", batas: "15 April 2026", status: "Siap Ambil" },
+			{ id: "PO-0002", judul: "Laut Bercerita", genre: "Fiksi", nama: "Bunga Mawar", telp: "0854-3237-8649", batas: "15 April 2026", status: "Siap Ambil" },
+			{ id: "PO-0003", judul: "Atomic Habits", genre: "Non-Fiksi", nama: "Melati Indah", telp: "0856-5782-3021", batas: "15 April 2026", status: "Siap Ambil" },
+			{ id: "PO-0004", judul: "Bumi Manusia", genre: "Fiksi", nama: "Mutiara Laut", telp: "0853-9524-9524", batas: "15 April 2026", status: "Siap Ambil" },
+			{ id: "PO-0005", judul: "Filosofi Teras", genre: "Non-Fiksi", nama: "Dewita Ayu", telp: "0854-1207-1224", batas: "15 April 2026", status: "Siap Ambil" },
+			{ id: "PO-0006", judul: "Laskar Pelangi", genre: "Fiksi", nama: "Nayala", telp: "NISN: 0090712578", batas: "15 April 2026", status: "Siap Ambil" }
+		];
+
+		// 2. Variabel Kontrol
+		let filteredData = [...dataMaster]; // Menampung hasil pencarian
+		let currentPage = 1;
+		const rowsPerPage = 5;
+
+		// 3. Seleksi Elemen DOM
+		const tableBody = document.getElementById('contentTable');
+		const paginationBtns = document.getElementById('paginationBtns');
+		const searchInput = document.getElementById('queueSearch');
+
+		// 4. Fungsi untuk merender baris tabel
+		function renderTable() {
+			// Hitung pemotongan data untuk pagination
+			const start = (currentPage - 1) * rowsPerPage;
+			const end = start + rowsPerPage;
+			const paginatedItems = filteredData.slice(start, end);
+
+			if (paginatedItems.length === 0) {
+				tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px;">Data tidak ditemukan.</td></tr>`;
+				return;
+			}
+
+			// Render baris ke HTML
+			tableBody.innerHTML = paginatedItems.map(item => `
+				<tr>
+					<td class="id-booking">${item.id}</td>
+					<td class="info-buku">
+						<span class="judul">${item.judul}</span>
+						<span style="font-size: 11px; color:#888;">Genre: ${item.genre}</span>
+					</td>
+					<td class="penerima">
+						<span class="nama">${item.nama}</span>
+						<span style="font-size: 11px; color:#888;">Telp: ${item.telp}</span>
+					</td>
+					<td><span class="batas-ambil">${item.batas}</span></td>
+					<td style="text-align: center;"><span class="status-pill">${item.status}</span></td>
+					<td>
+						<div class="action-btns">
+							<button class="btn-action btn-check"><i class="fas fa-check"></i></button>
+							<button class="btn-action btn-cross"><i class="fas fa-times"></i></button>
+						</div>
+					</td>
+				</tr>
+			`).join('');
+
+			updatePaginationControls();
+		}
+
+		// 5. Fungsi untuk memperbarui tombol angka halaman
+		function updatePaginationControls() {
+			const pageCount = Math.ceil(filteredData.length / rowsPerPage);
+			const container = document.getElementById('paginationBtns');
+			container.innerHTML = '';
+
+			if (pageCount <= 1) return; // Tidak perlu navigasi jika hanya 1 halaman
+
+			// 1. Tombol Panah Kiri (Prev)
+			const prevBtn = document.createElement('button');
+			prevBtn.className = 'btn-page';
+			prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+			prevBtn.disabled = currentPage === 1;
+			prevBtn.onclick = () => {
+				currentPage--;
+				renderTable();
+			};
+			container.appendChild(prevBtn);
+
+			// 2. Tombol Angka Halaman
+			for (let i = 1; i <= pageCount; i++) {
+				const btn = document.createElement('button');
+				btn.innerText = i;
+				btn.className = `btn-page ${i === currentPage ? 'active' : ''}`;
+				btn.onclick = () => {
+					currentPage = i;
+					renderTable();
+				};
+				container.appendChild(btn);
+			}
+
+			// 3. Tombol Panah Kanan (Next)
+			const nextBtn = document.createElement('button');
+			nextBtn.className = 'btn-page';
+			nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+			nextBtn.disabled = currentPage === pageCount;
+			nextBtn.onclick = () => {
+				currentPage++;
+				renderTable();
+			};
+			container.appendChild(nextBtn);
+		}
+
+		// 6. Logika Pencarian
+		searchInput.addEventListener('input', function() {
+			const query = searchInput.value.toLowerCase().trim();
+			
+			// Filter data berdasarkan input
+			filteredData = dataMaster.filter(item => {
+				return (
+					item.judul.toLowerCase().includes(query) ||
+					item.nama.toLowerCase().includes(query) ||
+					item.id.toLowerCase().includes(query)
+				);
+			});
+
+			currentPage = 1; // Reset ke halaman 1 setiap kali mencari
+			renderTable();
+		});
+
+		// 7. Inisialisasi Pertama Kali
+		renderTable();
+	});
+    </script>
+</body>
+</html>

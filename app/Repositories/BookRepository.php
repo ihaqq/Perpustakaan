@@ -69,11 +69,11 @@ class BookRepository implements BookRepositoryInterface
             $kategoriStok = strtolower($params['stok']);
 
             if ($kategoriStok == 'high') {
-                $query->where('stok','>=', '5');
+                $query->where('stok_tersedia','>', '4');
             } elseif ($kategoriStok == 'low') {
-                $query->where('stok', [1, 4]);
+                $query->where('stok_tersedia', '>=', '1')->where('stok_tersedia', '<=', '4');
             } elseif ($kategoriStok == 'empty') {
-                $query->where('stok', '<=','0');
+                $query->where('stok_tersedia', '<=','0');
             }
         }
 

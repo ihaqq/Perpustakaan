@@ -7,22 +7,6 @@ use Illuminate\Support\Facades\Route;
 //     return view('sampah/welcome');
 // })      -> name('/');
 
-// Route::get('/halaman-admin', function () {
-//     return view('Admin/dashboard/dashboard_improved');
-// })      -> name('dashboard-admin');
-
-// Route::get('/halaman-daftar-anggota', function () {
-//     return view('Admin/anggota/halaman_anggota');
-// });
-
-// Route::get('/halaman-admin-inspirasi', function () {
-//     return view('Admin/template/gemini/dashboard');
-// });
-// Route::get('/buku', function () {
-//     return view('Admin/buku/halaman_buku');
-// });
-
-
 // route admin dashboard
 Route::get('/dashboard', function () {
     return view('Admin/dashboard/dashboard');
@@ -63,9 +47,9 @@ Route::get('/edit-buku', function () {
 Route::get('/daftar-antrian', function () {
     return view('Admin/antrian/daftar_antrian');
 })      -> name('daftar-antrian');
-Route::get('/konfirmasi-ketersediaan', function () {
-    return view('Admin/antrian/konfirmasi_ketersediaan');
-})      -> name('konfirmasi-ketersediaan');
+Route::get('/daftar-pengambilan', function () {
+    return view('Admin/pengambilan/daftar_pengambilan');
+})      -> name('daftar-pengambilan');
 Route::get('/konfirmasi-peminjaman', function () {
     return view('Admin/antrian/konfirmasi_peminjaman');
 })      -> name('konfirmasi-peminjaman');

@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Book extends Model
+class Peminjaman extends Model
 {
     use HasUuids, HasFactory;
 
     // Menentukan nama tabel yang digunakan oleh model ini
-    protected $table = 'books';
+    protected $table = 'peminjaman';
 
     // Menentukan primary key tabel
     protected $primaryKey = 'id';
@@ -27,34 +27,22 @@ class Book extends Model
 
     // Menentukan atribut yang dapat diisi (mass assignable)
     protected $fillable = [
-        'kode_buku',
-        'genres_id',
-        'judul',
-        'pengarang',
-        'penerbit',
-        'tahun_terbit',
-        'bahasa',
-        'lokasi_rak',
-        'jumlah_halaman',
-        'sinopsis',
-        'cover',
-        'stok_total',
-        'stok_tersedia',
-        'kondisi_awal',
+        'anggota_id',
+        'book_id',
+        'tanggal_booking',
+        'tanggal_pinjam',
+        'tenggat_kembali',
+        'tanggal_kembali',
+        'denda',
+        'status',
     ];
-
-    public function genre()
+    public function book()
     {
-        return $this->belongsTo(Genre::class,'genres_id', 'id');
+        return $this->belongsTo(Book::class,'book_id', 'id');
     }
 
-    public function peminjaman()
+    public function anggota()
     {
-        return $this->hasMany(Peminjaman::class,'book_id', 'id');
-    }
-
-    public function antrian()
-    {
-        return $this->hasMany(Antrian::class,'book_id', 'id');
+        return $this->belongsTo(Anggota::class,'anggota_id', 'id');
     }
 }

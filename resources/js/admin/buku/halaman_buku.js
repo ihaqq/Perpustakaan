@@ -157,9 +157,9 @@ function populateBooksTable(filteredBooks = books) {
             : `https://placehold.co/400x600/5c6ac4/white?text=No+Cover`;
 
         let stockClass = 'high';
-        if (book.stok <= 5 && book.stok > 0) {
+        if (book.stok_tersedia <= 4 && book.stok_tersedia > 0) {
             stockClass = 'low';
-        } else if (book.stok === 0) {
+        } else if (book.stok_tersedia === 0) {
             stockClass = 'empty';
         }
 
@@ -173,7 +173,7 @@ function populateBooksTable(filteredBooks = books) {
             </td>
             <td>${book.kategori}</td>
             <td>${book.genre}</td>
-            <td><span class="stock-badge ${stockClass}">${book.stok}</span></td>
+            <td><span class="stock-badge ${stockClass}">${book.stok_tersedia}</span></td>
             <td style="text-align: center;">
                 <div class="action-icons">
                     <button onclick="window.openDetailModal('${book.id}')" class="btn-action btn-view" title="Detail"><i class="fas fa-eye"></i></button>
@@ -262,12 +262,12 @@ window.openDetailModal = async function(id) {
             document.getElementById('detail-kategori').innerText = book.kategori || '-';
 
             const detailStokElement = document.getElementById('detail-stok');
-            const stokValue = book.stok || 0; 
+            const stokValue = book.stok_tersedia || 0; 
             detailStokElement.innerText = stokValue;
 
             detailStokElement.classList.remove('high', 'low', 'empty');
             let stockClass = 'high'; 
-            if (stokValue <= 5 && stokValue > 0) stockClass = 'low'; 
+            if (stokValue <= 4 && stokValue > 0) stockClass = 'low'; 
             else if (stokValue == 0) stockClass = 'empty'; 
             
             detailStokElement.classList.add('stock-badge', stockClass);
@@ -448,7 +448,7 @@ window.openEditModal = async function(id) {
             document.getElementById('add-judul').value = book.judul_buku || '';
             document.getElementById('add-pengarang').value = book.pengarang || '';
             document.getElementById('add-penerbit').value = book.penerbit || '';
-            document.getElementById('add-stok').value = book.stok || '';
+            document.getElementById('add-stok').value = book.stok_total || '';
             document.getElementById('add-tahun_terbit').value = book.tahun_terbit || '';
             document.getElementById('add-bahasa').value = book.bahasa || '';
             document.getElementById('add-lokasi_rak').value = book.lokasi_rak || '';
@@ -616,7 +616,7 @@ addBookForm.addEventListener('submit', async (e) => {
         formData.append('judul', document.getElementById('add-judul').value);
         formData.append('pengarang', document.getElementById('add-pengarang').value);
         formData.append('penerbit', document.getElementById('add-penerbit').value);
-        formData.append('stok', document.getElementById('add-stok').value);
+        formData.append('stok_total', document.getElementById('add-stok').value);
         formData.append('tahun_terbit', document.getElementById('add-tahun_terbit').value);
         formData.append('bahasa', document.getElementById('add-bahasa').value);
         formData.append('lokasi_rak', document.getElementById('add-lokasi_rak').value);

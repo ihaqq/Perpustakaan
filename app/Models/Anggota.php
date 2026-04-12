@@ -43,4 +43,14 @@ class Anggota extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class,'anggota_id', 'id');
+    }
+
+    public function antrian()
+    {
+        return $this->hasMany(Antrian::class,'anggota_id', 'id');
+    }
 }

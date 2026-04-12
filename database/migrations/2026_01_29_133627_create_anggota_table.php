@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignUuid('kelas_id')->constrained('kelas')->cascadeOnDelete();
             
             $table->enum('status', ['Pending', 'Approved'])->default('Pending');  
-            $table->string('nomor_induk', 50)->nullable();
+            $table->string('nomor_induk', 50)->nullable()->unique();
             $table->enum('kategori', ['Pelajar', 'Guru'])->nullable();
             $table->timestamps();
         });

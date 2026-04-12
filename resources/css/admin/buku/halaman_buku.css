@@ -392,15 +392,18 @@ td {
 
 #bookSearch {
     width: 100%;
-    padding: 10px 10px 10px 35px; /* Padding kiri ditambah untuk ruang icon */
+    padding: 10px 10px 10px 38px;
     border-radius: 8px;
-    border: 1px solid #ccc;
-    transition: border-color 0.2s;
+    border: 1px solid #cbd5e1;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    background-color: #fff;
 }
 
 #bookSearch:focus {
     outline: none;
     border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.15);
 }
 /* Modal Styles */
 

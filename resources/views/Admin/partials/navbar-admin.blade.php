@@ -39,15 +39,15 @@
                             <li class="{{ request()->routeIs('daftar-genre') ? 'active' : ''}}"><a href="{{ route('daftar-genre') }}"><i class="fas fa-tags"></i>Daftar Genre</a></li>
                         </ul>
                     </li>
-                    <li class="{{ request()->routeIs('daftar-antrian') || request()->routeIs('konfirmasi-ketersediaan') ? 'active' : ''}}">
+                    <li class="{{ request()->routeIs('daftar-antrian') || request()->routeIs('daftar-pengambilan') ? 'active' : ''}}">
                         <a href="#" class="menu-toggle">
                             <i class="fas fa-clock"></i> 
                             <span>Antrian Pre-Order</span> 
                             <i class="fas fa-caret-down"></i>
                         </a>
-                        <ul class="submenu" style="{{ request()->routeIs('daftar-antrian') || request()->routeIs('konfirmasi-ketersediaan') ? 'display: block;' : ''}}">
-                            <li class="{{ request()->routeIs('daftar-antrian') ? 'active' : ''}}"><a href="antrian.html"><i class="fas fa-clipboard-list"></i>Daftar Antrian</a></li>
-                            <li class="{{ request()->routeIs('konfirmasi-ketersediaan') ? 'active' : ''}}"><a href="#"><i class="fas fa-check-circle"></i>Konfirmasi Ketersediaan</a></li>
+                        <ul class="submenu" style="{{ request()->routeIs('daftar-antrian') || request()->routeIs('daftar-pengambilan') ? 'display: block;' : ''}}">
+                            <li class="{{ request()->routeIs('daftar-antrian') ? 'active' : ''}}"><a href="{{ route('daftar-antrian') }}"><i class="fas fa-clipboard-list"></i>Daftar Antrian</a></li>
+                            <li class="{{ request()->routeIs('daftar-pengambilan') ? 'active' : ''}}"><a href="{{ route('daftar-pengambilan') }}"><i class="fas fa-check-circle"></i>Daftar Pengambilan</a></li>
                         </ul>
                     </li>
                     <li class="{{ request()->routeIs('peminjaman') || request()->routeIs('pengembalian') || request()->routeIs('riwayat-transaksi') ? 'active' : ''}}">

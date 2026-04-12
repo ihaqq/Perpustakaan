@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Tabel Preorder
-        Schema::create('preorders', function (Blueprint $table) {
+        // Tabel Buku
+        Schema::create('book_eksemplar', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('id_user')->references('id')->on('users');
-            $table->foreignUuid('id_book')->references('id')->on('books');
-            $table->enum('status', ['menunggu', 'diberitahu', 'selesai', 'dilewati'])->default('menunggu');
-            $table->date('tanggal_preorder');
+            $table->foreignUuid('book_id')->nullable()->references('id')->on('books');
+            $table->string('kode_buku', 255)->unique();
+            $table->string('kondisi_awal', 255)->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('preorders');
+        Schema::dropIfExists('book_eksemplar');
     }
 };
