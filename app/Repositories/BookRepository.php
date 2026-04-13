@@ -13,6 +13,11 @@ class BookRepository implements BookRepositoryInterface
         return Book::all();
     }
 
+    public function count()
+    {
+        return Book::count();
+    }
+
     public function find($id)
     {
         return Book::findOrFail($id);

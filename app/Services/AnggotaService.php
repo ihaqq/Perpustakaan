@@ -20,6 +20,15 @@ class AnggotaService
         
         return $query;
     }
+
+    public function getTotalAnggota()
+    {
+        // anggota dengan status "Approved" saja yang dihitung totalnya
+        $result = $this->anggotaRepository->count(['status' => 'Approved']);
+
+        return $result;
+    }
+
     public function getAnggotaById($id)
     {
         return $this->anggotaRepository->find($id);

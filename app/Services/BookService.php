@@ -20,6 +20,12 @@ class BookService
         
         return $query;
     }
+
+    public function getTotalBooks()
+    {
+        return $this->bookRepository->count();
+    }
+    
     public function getBookById($id)
     {
         return $this->bookRepository->find($id);

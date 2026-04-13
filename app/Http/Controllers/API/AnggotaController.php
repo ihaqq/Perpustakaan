@@ -176,4 +176,25 @@ class AnggotaController extends Controller
             );
         }
     }
+
+    public function totalAnggota(Request $request)
+    {
+        try {
+
+            $total = $this->anggotaService->getTotalAnggota();
+
+            return ResponseHelper::success(
+                ['total' => $total],
+                'Berhasil mengambil total anggota',
+                Response::HTTP_OK
+            );
+
+        } catch (\Throwable $th) {
+            return ResponseHelper::error(
+                null,
+                'Gagal mengambil total anggota ' . $th->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+    }
 }

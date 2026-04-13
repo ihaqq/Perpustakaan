@@ -1,3 +1,4 @@
+
 const sidebar = document.querySelector(".sidebar");
 const sidebarToggle = document.getElementById("sidebar-toggle");
 const navLinksWithSubmenu = document.querySelectorAll(".sidebar nav ul li a");

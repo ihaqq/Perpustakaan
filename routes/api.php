@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 Route::apiResource('users', UserController::class, );
 
 // Route Books
+Route::get('books/total', [BookController::class, 'totalBooks']);
 Route::apiResource('books', BookController::class);
 
 // Route Genre
@@ -20,6 +21,7 @@ Route::apiResource('genre', GenreController::class);
 
 
 // Route Peserta
+Route::get('anggota/total', [AnggotaController::class, 'totalAnggota']);    
 Route::apiResource('anggota', AnggotaController::class,);
 
 // Route Kelas

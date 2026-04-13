@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         memberTableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">Memuat data...</td></tr>`;
 
         try {
-            const url = new URL(`${BASE_URL}/anggota`);
+            const url = new URL(`${BASE_URL}/anggota?status=Approved`);
             url.searchParams.append("search", searchQuery);
             if (selectedType) url.searchParams.append("kategori", selectedType);
             if (selectedJurusan)

@@ -174,4 +174,25 @@ class BookController extends Controller
             );
         }
     }
+
+    public function totalBooks(Request $request)
+    {
+        try {
+
+            $total = $this->bookService->getTotalBooks();
+
+            return ResponseHelper::success(
+                ['total' => $total],
+                'Berhasil mengambil total buku',
+                Response::HTTP_OK
+            );
+
+        } catch (\Throwable $th) {
+            return ResponseHelper::error(
+                null,
+                'Gagal mengambil total buku ' . $th->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+    }
 }

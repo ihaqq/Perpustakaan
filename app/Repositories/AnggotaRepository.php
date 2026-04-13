@@ -13,15 +13,28 @@ class AnggotaRepository implements AnggotaRepositoryInterface
         return Anggota::all();
     }
 
+    public function count($conditions = [])
+    {
+        $query = Anggota::query();
+
+        foreach ($conditions as $column => $value) {
+            $query->where($column, $value);
+        }
+
+        return $query->count();
+    }
+
     public function find($id)
     {
         return Anggota::findOrFail($id);
     }
+
     public function findById($id)
     {
         // failOrFail akan otomatis melempar ModelNotFoundException jika ID tidak ada (ditangkap oleh Controller)
         return Anggota::findOrFail($id);
     }
+
     public function create(array $data)
     {
         return Anggota::create($data);
