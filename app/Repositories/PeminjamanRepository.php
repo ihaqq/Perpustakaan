@@ -3,53 +3,54 @@
 namespace App\Repositories;
 
 use App\Models\Book;
-use App\RepositoriesInterface\BookRepositoryInterface;
+use App\Models\Peminjaman;
+use App\RepositoriesInterface\PeminjamanRepositoryInterface;
 
-class BookRepository implements BookRepositoryInterface
+class PeminjamanRepository implements PeminjamanRepositoryInterface
 {
     public function all()
     {
         // Menggunakan Eloquent untuk mengambil semua data book
-        return Book::all();
+        return Peminjaman::all();
     }
 
     public function count()
     {
-        return Book::count();
+        return Peminjaman::count();
     }
 
     public function find($id)
     {
-        return Book::findOrFail($id);
+        return Peminjaman::findOrFail($id);
     }
     public function findById($id)
     {
         // failOrFail akan otomatis melempar ModelNotFoundException jika ID tidak ada (ditangkap oleh Controller)
-        return Book::findOrFail($id);
+        return Peminjaman::findOrFail($id);
     }
     public function create(array $data)
     {
-        return Book::create($data);
+        return Peminjaman::create($data);
     }
 
     public function update($id, array $data)
     {
         // reuse method findById
-        $book = $this->findById($id);
-        $book->update($data);
+        $peminjaman = $this->findById($id);
+        $peminjaman->update($data);
         
-        return $book;
+        return $peminjaman;
     }
 
     public function delete($id)
     {
-        $book = $this->findById($id);
-        return $book->delete();
+        $peminjaman = $this->findById($id);
+        return $peminjaman->delete();
     }
     
     public function getBooksWithQuery(array $params)
     {
-        $query = Book::query();
+        $query = Peminjaman::query();
 
         // Search
         if (!empty($params['search'])) {
@@ -97,25 +98,5 @@ class BookRepository implements BookRepositoryInterface
     {
         // Mengambil 1 buku terakhir berdasarkan urutan waktu dibuat (created_at)
         return Book::orderBy('created_at', 'desc')->first();
-    }
-
-    public function lockForUpdate($id)
-    {
-        // Mengunci baris buku ini untuk mencegah race condition
-        return Book::where('id', $id)->lockForUpdate()->first();
-    }
-
-    public function decrementStok($id)
-    {
-        $book = $this->findById($id);
-        if ($book->stok_tersedia > 0) {
-            $book->decrement('stok_tersedia');
-        }
-    }
-
-    public function incrementStok($id)
-    {
-        $book = $this->findById($id);
-        $book->increment('stok_tersedia');
     }
 }

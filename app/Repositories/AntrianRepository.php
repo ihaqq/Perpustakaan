@@ -2,54 +2,55 @@
 
 namespace App\Repositories;
 
+use App\Models\Antrian;
 use App\Models\Book;
-use App\RepositoriesInterface\BookRepositoryInterface;
+use App\RepositoriesInterface\AntrianRepositoryInterface;
 
-class BookRepository implements BookRepositoryInterface
+class AntrianRepository implements AntrianRepositoryInterface
 {
     public function all()
     {
         // Menggunakan Eloquent untuk mengambil semua data book
-        return Book::all();
+        return Antrian::all();
     }
 
     public function count()
     {
-        return Book::count();
+        return Antrian::count();
     }
 
     public function find($id)
     {
-        return Book::findOrFail($id);
+        return Antrian::findOrFail($id);
     }
     public function findById($id)
     {
         // failOrFail akan otomatis melempar ModelNotFoundException jika ID tidak ada (ditangkap oleh Controller)
-        return Book::findOrFail($id);
+        return Antrian::findOrFail($id);
     }
     public function create(array $data)
     {
-        return Book::create($data);
+        return Antrian::create($data);
     }
 
     public function update($id, array $data)
     {
         // reuse method findById
-        $book = $this->findById($id);
-        $book->update($data);
+        $antrian = $this->findById($id);
+        $antrian->update($data);
         
-        return $book;
+        return $antrian;
     }
 
     public function delete($id)
     {
-        $book = $this->findById($id);
-        return $book->delete();
+        $antrian = $this->findById($id);
+        return $antrian->delete();
     }
     
     public function getBooksWithQuery(array $params)
     {
-        $query = Book::query();
+        $query = Antrian::query();
 
         // Search
         if (!empty($params['search'])) {
@@ -96,26 +97,6 @@ class BookRepository implements BookRepositoryInterface
     public function getLastBook()
     {
         // Mengambil 1 buku terakhir berdasarkan urutan waktu dibuat (created_at)
-        return Book::orderBy('created_at', 'desc')->first();
-    }
-
-    public function lockForUpdate($id)
-    {
-        // Mengunci baris buku ini untuk mencegah race condition
-        return Book::where('id', $id)->lockForUpdate()->first();
-    }
-
-    public function decrementStok($id)
-    {
-        $book = $this->findById($id);
-        if ($book->stok_tersedia > 0) {
-            $book->decrement('stok_tersedia');
-        }
-    }
-
-    public function incrementStok($id)
-    {
-        $book = $this->findById($id);
-        $book->increment('stok_tersedia');
+        return Antrian::orderBy('created_at', 'desc')->first();
     }
 }

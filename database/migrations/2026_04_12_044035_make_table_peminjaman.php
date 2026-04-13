@@ -14,8 +14,8 @@ return new class extends Migration
             $table->foreignUuid('book_id')->constrained('books')->cascadeOnDelete();
             $table->dateTime('tanggal_booking')->nullable();
             $table->dateTime('tanggal_pinjam')->nullable();
-            $table->dateTime('tenggat_kembali')->nullable();
             $table->dateTime('tanggal_kembali')->nullable();
+            $table->dateTime('tanggal_dikembalikan')->nullable();
             $table->integer('denda')->default(0);
             $table->enum('status', ['MENUNGGU_DIAMBIL', 'DIPINJAM', 'KEMBALI', 'TERLAMBAT', 'DIBATALKAN', 'SELESAI'])->nullable();
             $table->timestamps();
@@ -24,6 +24,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('peminjaman_buku');
+        Schema::dropIfExists('peminjaman');
     }
 };
