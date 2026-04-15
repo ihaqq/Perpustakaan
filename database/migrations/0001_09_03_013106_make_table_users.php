@@ -6,29 +6,23 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        // Tabel Admin (hanya satu admin tetap dibuat terpisah)
         Schema::create('users', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('nama');
+            $table->string('nama')->nullable();
             $table->string('username')->unique();   
-            $table->string('telepon', 255)->nullable();
-            $table->string('password');
-            $table->string('role');
-            // $table->rememberToken();
+            $table->string('email')->nullable()->unique();
+            $table->string('password')->nullable();
+            $table->string('telepon')->nullable();
+            $table->string('foto_profile')->nullable();
+            $table->enum('gender', ['Laki-Laki', 'Perempuan'])->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('Users');
+        Schema::dropIfExists('users');
     }
 };

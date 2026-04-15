@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class BookController extends Controller
 {
     protected $bookService;
-    
+
     public function __construct(BookService $bookService)
     {
         $this->bookService = $bookService;
@@ -124,8 +124,8 @@ class BookController extends Controller
     {
         try {
             // Gunakan validated() agar lebih aman dari mass-assignment vulnerability
-            $data = $request->validated(); 
-            
+            $data = $request->validated();
+
             // Panggil service untuk memproses pembaruan data dan file gambar
             $book = $this->bookService->updateBook($id, $data);
 
@@ -171,6 +171,27 @@ class BookController extends Controller
                 null,
                 'Gagal menghapus data buku: ' . $th->getMessage(),
                 Response::HTTP_INTERNAL_SERVER_ERROR // 500 Internal Server Error
+            );
+        }
+    }
+
+    public function totalBooks(Request $request)
+    {
+        try {
+
+            $total = $this->bookService->getTotalBooks();
+
+            return ResponseHelper::success(
+                ['total' => $total],
+                'Berhasil mengambil total buku',
+                Response::HTTP_OK
+            );
+
+        } catch (\Throwable $th) {
+            return ResponseHelper::error(
+                null,
+                'Gagal mengambil total buku ' . $th->getMessage(),
+                Response::HTTP_INTERNAL_SERVER_ERROR
             );
         }
     }

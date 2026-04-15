@@ -166,7 +166,7 @@
                         <div class="form-row form-row-3-cols">
                             <div class="form-group">
                                 <label>Stok:</label>
-                                <input type="number" id="add-stok" class="input-style" min="1" >
+                                <input type="number" id="add-stok" class="input-style" min="0" >
                             </div>
                             <div class="form-group">
                                 <label>Tahun Terbit:</label>
@@ -229,7 +229,7 @@
                     <i class="fas fa-check"></i>
                 </div>
                 <h4>Berhasil!</h4>
-                <p>Data buku telah berhasil disimpan ke dalam sistem SIPERPUS.</p>
+                <p>Data buku telah berhasil disimpan di dalam sistem SIPERPUS.</p>
                 <div class="confirm-actions">
                     <button onclick="closeSuccesAddBookmodal()" class="btn-success">Mengerti</button>
                 </div>
@@ -242,8 +242,8 @@
                 <div class="icon-box">
                     <i class="fas fa-check"></i>
                 </div>
-                <h4>Berhasil!</h4>
-                <p>Data buku telah berhasil diubah.</p>
+                <h4>Perubahan Disimpan!</h4>
+                <p>Data buku telah berhasil diperbarui dan disimpan ke dalam sistem SIPERPUS.</p>
                 <div class="confirm-actions">
                     <button onclick="closeSuccesAddBookmodal()" class="btn-success">Mengerti</button>
                 </div>

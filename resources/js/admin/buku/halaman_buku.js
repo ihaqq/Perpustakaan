@@ -20,8 +20,15 @@ const btnSubmitBook = document.getElementById('btnSubmitBook');
 const succesAddBookModal = document.getElementById('addSuccesModal');
 const successEditBookModal = document.getElementById('addSuccesEditModal');
 const succesDeleteBookModal = document.getElementById('deleteSuccesModal');
-const failAddBookModal = document.getElementById('addFailModal'); // [BARU]
-const failEditBookModal = document.getElementById('addFailEditModal'); // [BARU]
+const failAddBookModal = document.getElementById('addFailModal');
+const failEditBookModal = document.getElementById('addFailEditModal');
+
+// === CONFIGURATION ===
+const currentDomain = window.location.origin;
+
+// BASE_URL menggunakan dinamis origin
+const BASE_URL = `${currentDomain}/api`;
+const ASSET_URL = `/storage/foto_profile/`; 
 
 // === Global Variable untuk mendeteksi Mode Edit/Tambah ===
 let currentEditBookId = null;
@@ -118,7 +125,8 @@ async function fetchBooks(page = 1) {
         const genre_id = genreFilterOptionsDiv.querySelector('.selected')?.dataset.filterValue || '';
 
         const params = new URLSearchParams({ page, search, kategori, stok, genre_id });
-        const res = await fetch(`/api/books?${params.toString()}`);
+        // UPDATE: Gunakan BASE_URL
+        const res = await fetch(`${BASE_URL}/books?${params.toString()}`);
         const json = await res.json();
 
         books = json.data.books;
@@ -143,14 +151,15 @@ function populateBooksTable(filteredBooks = books) {
     filteredBooks.forEach((book, index) => {
         const row = document.createElement('tr');
 
+        // UPDATE: Gunakan currentDomain untuk cover
         const coverPath = book.cover 
-            ? `/storage/${book.cover}`
+            ? `${currentDomain}/storage/${book.cover}`
             : `https://placehold.co/400x600/5c6ac4/white?text=No+Cover`;
 
         let stockClass = 'high';
-        if (book.stok <= 5 && book.stok > 0) {
+        if (book.stok_tersedia <= 4 && book.stok_tersedia > 0) {
             stockClass = 'low';
-        } else if (book.stok === 0) {
+        } else if (book.stok_tersedia === 0) {
             stockClass = 'empty';
         }
 
@@ -164,7 +173,7 @@ function populateBooksTable(filteredBooks = books) {
             </td>
             <td>${book.kategori}</td>
             <td>${book.genre}</td>
-            <td><span class="stock-badge ${stockClass}">${book.stok}</span></td>
+            <td><span class="stock-badge ${stockClass}">${book.stok_tersedia}</span></td>
             <td style="text-align: center;">
                 <div class="action-icons">
                     <button onclick="window.openDetailModal('${book.id}')" class="btn-action btn-view" title="Detail"><i class="fas fa-eye"></i></button>
@@ -243,7 +252,8 @@ window.openDetailModal = async function(id) {
     document.getElementById('detail-judul').innerText = 'Memuat data...';
     
     try {
-        const response = await fetch(`/api/books/${id}`);
+        // UPDATE: Gunakan BASE_URL
+        const response = await fetch(`${BASE_URL}/books/${id}`);
         const json = await response.json();
 
         if (response.ok && json.success) {
@@ -252,12 +262,12 @@ window.openDetailModal = async function(id) {
             document.getElementById('detail-kategori').innerText = book.kategori || '-';
 
             const detailStokElement = document.getElementById('detail-stok');
-            const stokValue = book.stok || 0; 
+            const stokValue = book.stok_tersedia || 0; 
             detailStokElement.innerText = stokValue;
 
             detailStokElement.classList.remove('high', 'low', 'empty');
             let stockClass = 'high'; 
-            if (stokValue <= 5 && stokValue > 0) stockClass = 'low'; 
+            if (stokValue <= 4 && stokValue > 0) stockClass = 'low'; 
             else if (stokValue == 0) stockClass = 'empty'; 
             
             detailStokElement.classList.add('stock-badge', stockClass);
@@ -274,7 +284,8 @@ window.openDetailModal = async function(id) {
 
             const coverElement = document.getElementById('detail-cover');
             if (book.cover) {
-                coverElement.src = `/storage/${book.cover}`; 
+                // UPDATE: Gunakan currentDomain
+                coverElement.src = `${currentDomain}/storage/${book.cover}`; 
             } else {
                 coverElement.src = 'https://placehold.co/400x600/5c6ac4/white?text=No+Cover';
             }
@@ -315,7 +326,9 @@ document.getElementById('btnConfirmDelete').addEventListener('click', async () =
             btnConfirm.disabled = true;
 
             const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
-            const response = await fetch(`/api/books/${bookIdToDelete}`, {
+            
+            // UPDATE: Gunakan BASE_URL
+            const response = await fetch(`${BASE_URL}/books/${bookIdToDelete}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type' : 'application/json',
@@ -342,7 +355,7 @@ document.getElementById('btnConfirmDelete').addEventListener('click', async () =
     }
 });
 
-// =========== Input Validation Display (BARU) ===========
+// =========== Input Validation Display ===========
 function clearValidationErrors() {
     document.querySelectorAll('.error-feedback').forEach(el => el.remove());
     document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
@@ -396,7 +409,7 @@ function showValidationErrors(errors) {
 window.openAddBookModal = function () {
     currentEditBookId = null; 
     addBookForm.reset(); 
-    clearValidationErrors(); // [BARU] Bersihkan pesan error lama
+    clearValidationErrors(); 
     
     const titleEl = document.querySelector('.add-modal-title h2');
     if(titleEl) titleEl.innerText = 'Tambah Buku';
@@ -416,7 +429,7 @@ window.openAddBookModal = function () {
 window.openEditModal = async function(id) {
     currentEditBookId = id; 
     addBookForm.reset(); 
-    clearValidationErrors(); // [BARU] Bersihkan pesan error lama
+    clearValidationErrors(); 
     
     const titleEl = document.querySelector('.add-modal-title h2');
     if(titleEl) titleEl.innerText = 'Edit Buku';
@@ -425,7 +438,8 @@ window.openEditModal = async function(id) {
     addBookModal.classList.add('active'); 
     
     try {
-        const response = await fetch(`/api/books/${id}`);
+        // UPDATE: Gunakan BASE_URL
+        const response = await fetch(`${BASE_URL}/books/${id}`);
         const json = await response.json();
 
         if (response.ok && json.success) {
@@ -434,7 +448,7 @@ window.openEditModal = async function(id) {
             document.getElementById('add-judul').value = book.judul_buku || '';
             document.getElementById('add-pengarang').value = book.pengarang || '';
             document.getElementById('add-penerbit').value = book.penerbit || '';
-            document.getElementById('add-stok').value = book.stok || '';
+            document.getElementById('add-stok').value = book.stok_total || '';
             document.getElementById('add-tahun_terbit').value = book.tahun_terbit || '';
             document.getElementById('add-bahasa').value = book.bahasa || '';
             document.getElementById('add-lokasi_rak').value = book.lokasi_rak || '';
@@ -459,7 +473,8 @@ window.openEditModal = async function(id) {
             const imagePreview = document.getElementById('imagePreview');
 
             if (book.cover) {
-                imagePreview.src = `/storage/${book.cover}`;
+                // UPDATE: Gunakan currentDomain
+                imagePreview.src = `${currentDomain}/storage/${book.cover}`;
                 previewContainer.style.display = 'flex';
                 placeholderContent.style.display = 'none';
             } else {
@@ -481,7 +496,7 @@ window.openEditModal = async function(id) {
 
 window.closeAddBookModal = function () {
     addBookModal.classList.remove('active');
-    clearValidationErrors(); // [BARU]
+    clearValidationErrors(); 
 }
 
 window.previewImage = function (input) {
@@ -506,7 +521,8 @@ async function fetchGenresForModal(kategori) {
         genreSelect.innerHTML = '<option value="" disabled selected>Memuat genre...</option>';
         genreSelect.disabled = true;
 
-        const response = await fetch(`/api/genre/list?kategori=${kategori}`);
+        // UPDATE: Gunakan BASE_URL
+        const response = await fetch(`${BASE_URL}/genre/list?kategori=${kategori}`);
         const json = await response.json();
 
         if (response.ok && json.success) {
@@ -545,7 +561,8 @@ async function loadFilterGenres(kategori = '') {
     `;
 
     try {
-        let url = '/api/genre/list';
+        // UPDATE: Gunakan BASE_URL
+        let url = `${BASE_URL}/genre/list`;
         if (kategori) url += `?kategori=${kategori}`;
 
         const response = await fetch(url);
@@ -575,7 +592,7 @@ async function loadFilterGenres(kategori = '') {
 // =========== Submit Form (Tambah & Edit) ===========
 addBookForm.addEventListener('submit', async (e) => {
     e.preventDefault(); 
-    clearValidationErrors(); // [BARU] Bersihkan error sebelum submit baru
+    clearValidationErrors(); 
 
     const originalBtnHTML = btnSubmitBook.innerHTML;
     btnSubmitBook.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
@@ -584,11 +601,12 @@ addBookForm.addEventListener('submit', async (e) => {
     try {
         const formData = new FormData();
         
-        let fetchUrl = '/api/books';
+        // UPDATE: Gunakan BASE_URL
+        let fetchUrl = `${BASE_URL}/books`;
         let fetchMethod = 'POST';
 
         if (currentEditBookId !== null) {
-            fetchUrl = `/api/books/${currentEditBookId}`;
+            fetchUrl = `${BASE_URL}/books/${currentEditBookId}`;
             formData.append('_method', 'PUT'); 
         }
 
@@ -598,7 +616,7 @@ addBookForm.addEventListener('submit', async (e) => {
         formData.append('judul', document.getElementById('add-judul').value);
         formData.append('pengarang', document.getElementById('add-pengarang').value);
         formData.append('penerbit', document.getElementById('add-penerbit').value);
-        formData.append('stok', document.getElementById('add-stok').value);
+        formData.append('stok_total', document.getElementById('add-stok').value);
         formData.append('tahun_terbit', document.getElementById('add-tahun_terbit').value);
         formData.append('bahasa', document.getElementById('add-bahasa').value);
         formData.append('lokasi_rak', document.getElementById('add-lokasi_rak').value);
@@ -636,7 +654,6 @@ addBookForm.addEventListener('submit', async (e) => {
 
             await fetchBooks(currentPage); 
         } 
-        // [BARU] Jika validasi gagal atau error sistem
         else {
             if (json.errors) {
                 showValidationErrors(json.errors); // Tampilkan pesan per form
@@ -667,7 +684,6 @@ addBookForm.addEventListener('submit', async (e) => {
 
 // =========== Penyatuan Global Modal Click & Close Functions ===========
 
-// [IMPROVISASI] Fungsi ini sekarang menutup semua modal hasil (Sukses & Gagal)
 window.closeSuccesAddBookmodal = function() {
     succesAddBookModal.classList.remove('active');
     successEditBookModal.classList.remove('active');

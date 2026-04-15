@@ -1,27 +1,32 @@
 <?php
 
-use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('sampah/welcome');
-// })      -> name('/');
+Route::get('/', function () {
+    return view('LandingPage/halaman_landing_page');
+})      -> name('landing-page');
 
-// Route::get('/halaman-admin', function () {
-//     return view('Admin/dashboard/dashboard_improved');
-// })      -> name('dashboard-admin');
+// route auth
+Route::get('/login', function () {
+    return view('Auth/Login/halaman_login');
+})      -> name('login');
+Route::get('/register', function () {
+    return view('Auth/Register/halaman_register');
+})      -> name('register');
 
-// Route::get('/halaman-daftar-anggota', function () {
-//     return view('Admin/anggota/halaman_anggota');
-// });
 
-// Route::get('/halaman-admin-inspirasi', function () {
-//     return view('Admin/template/gemini/dashboard');
-// });
-// Route::get('/buku', function () {
-//     return view('Admin/buku/halaman_buku');
-// });
-
+// Route::get('/forgot-password', function () {
+//     return view('Auth/ForgotPassword/forgot_password');
+// })      -> name('forgot-password');
+// Route::get('/reset-password', function () {
+//     return view('Auth/ResetPassword/reset_password');
+// })      -> name('reset-password');
+// Route::get('/verify-email', function () {
+//     return view('Auth/VerifyEmail/verify_email');
+// })      -> name('verify-email');
+// Route::get('/confirm-password', function () {
+//     return view('Auth/ConfirmPassword/confirm_password');
+// })      -> name('confirm-password');
 
 // route admin dashboard
 Route::get('/dashboard', function () {
@@ -32,9 +37,9 @@ Route::get('/dashboard', function () {
 Route::get('/daftar-anggota', function () {
     return view('Admin/anggota/daftar_anggota');
 })      -> name('daftar-anggota');
-Route::get('/tambah-anggota', function () {
-    return view('Admin/anggota/tambah-anggota');
-})      -> name('tambah-anggota');
+Route::get('/konfirmasi-pengguna', function () {
+    return view('Admin/konfirmasi_pengguna/halaman_konfirmasi_pengguna');
+})      -> name('konfirmasi-pengguna');
 Route::get('/edit-anggota', function () {
     return view('Admin/anggota/edit-anggota');
 })      -> name('edit-anggota');
@@ -43,52 +48,35 @@ Route::get('/detail-anggota', function () {
 })      -> name('detail-anggota');
 
 // route admin buku
-Route::get('/halaman-buku', function () {
+Route::get('/daftar-buku', function () {
     return view('Admin/buku/halaman_buku');
-})      -> name('halaman-buku');
-Route::get('/perbaikan-halaman-buku', function () {
-    return view('Admin/buku/perbaikan_tabel_buku/perbaikan_buku');
-})      -> name('perbaikan-halaman-buku');
-Route::get('/kategori-buku', function () {
-    return view('Admin/buku/kategori_buku');
-})      -> name('kategori-buku');
-Route::get('/tambah-buku', function () {
-    return view('Admin/buku/tambah_buku');
-})      -> name('tambah-buku');
-Route::get('/edit-buku', function () {
-    return view('Admin/buku/edit_buku');
-})      -> name('edit-buku');
+})      -> name('daftar-buku');
+Route::get('/daftar-genre', function () {
+    return view('Admin/genre/daftar_genre');
+})      -> name('daftar-genre');
 
 // route admin Antrian
 Route::get('/daftar-antrian', function () {
     return view('Admin/antrian/daftar_antrian');
 })      -> name('daftar-antrian');
-Route::get('/konfirmasi-ketersediaan', function () {
-    return view('Admin/antrian/konfirmasi_ketersediaan');
-})      -> name('konfirmasi-ketersediaan');
-Route::get('/konfirmasi-peminjaman', function () {
-    return view('Admin/antrian/konfirmasi_peminjaman');
-})      -> name('konfirmasi-peminjaman');
+Route::get('/daftar-pengambilan', function () {
+    return view('Admin/pengambilan/daftar_pengambilan');
+})      -> name('daftar-pengambilan');
 
 // route admin transaksi
 Route::get('/daftar-peminjaman', function () {
-    return view('Admin/transaksi/daftar_peminjaman');
+    return view('Admin/Peminjaman/halaman_buku');
 })      -> name('daftar-peminjaman');
 Route::get('/daftar-pengembalian', function () {
-    return view('Admin/transaksi/daftar_pengembalian');
+    return view('Admin/Pengembalian/halaman_pengembalian');
 })      -> name('daftar-pengembalian');
-
-// route admin riwayat transaksi
 Route::get('/riwayat-transaksi', function () {
-    return view('Admin/transaksi/riwayat_transaksi/riwayat_transaksi');
+    return view('Admin/riwayat_transaksi/halaman_riwayat_transaksi');
 })      -> name('riwayat-transaksi');
-Route::get('/detail-transaksi', function () {
-    return view('Admin/transaksi/riwayat_transaksi/detail_riwayat/detail_riwayat');
-})      -> name('detail-transaksi');
 
 // route admin Laporan
 Route::get('/statistik-laporan', function () {
-    return view('Admin/laporan/statistik_laporan');
+    return view('Admin/statistik_laporan/halaman_laporan_statistik');
 })      -> name('statistik-laporan');
 Route::get('/buku-populer', function () {
     return view('Admin/transaksi/buku_populer');

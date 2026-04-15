@@ -27,7 +27,8 @@ class BookFactory extends Factory
             'lokasi_rak' => strtoupper($this->faker->bothify('RAK-??-##')),
             'jumlah_halaman' => $this->faker->numberBetween(50, 500),
             'sinopsis' => $this->faker->paragraph(),
-            'stok' => $this->faker->numberBetween(0, 20),
+            'stok_total' => $this->faker->numberBetween(0, 20),
+            'stok_tersedia' => $this->faker->numberBetween(0, 20),
             'kondisi_awal' => $this->faker->randomElement(['Baik', 'Rusak Ringan', 'Rusak']),
         ];
     }

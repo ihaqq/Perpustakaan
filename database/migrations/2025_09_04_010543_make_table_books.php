@@ -25,7 +25,8 @@ return new class extends Migration
             $table->string('lokasi_rak', 255)->nullable();
             $table->integer('jumlah_halaman')->nullable();
             $table->text('sinopsis')->nullable();
-            $table->integer('stok')->default(0);
+            $table->integer('stok_total')->default(0);
+            $table->integer('stok_tersedia')->default(0);
             $table->string('kondisi_awal', 255)->nullable();
             $table->timestamps();
         });

@@ -13,6 +13,11 @@ class BookRepository implements BookRepositoryInterface
         return Book::all();
     }
 
+    public function count()
+    {
+        return Book::count();
+    }
+
     public function find($id)
     {
         return Book::findOrFail($id);
@@ -69,11 +74,11 @@ class BookRepository implements BookRepositoryInterface
             $kategoriStok = strtolower($params['stok']);
 
             if ($kategoriStok == 'high') {
-                $query->where('stok','>=', '5');
+                $query->where('stok_tersedia','>', '4');
             } elseif ($kategoriStok == 'low') {
-                $query->where('stok', [1, 4]);
+                $query->where('stok_tersedia', '>=', '1')->where('stok_tersedia', '<=', '4');
             } elseif ($kategoriStok == 'empty') {
-                $query->where('stok', '<=','0');
+                $query->where('stok_tersedia', '<=','0');
             }
         }
 
@@ -92,5 +97,25 @@ class BookRepository implements BookRepositoryInterface
     {
         // Mengambil 1 buku terakhir berdasarkan urutan waktu dibuat (created_at)
         return Book::orderBy('created_at', 'desc')->first();
+    }
+
+    public function lockForUpdate($id)
+    {
+        // Mengunci baris buku ini untuk mencegah race condition
+        return Book::where('id', $id)->lockForUpdate()->first();
+    }
+
+    public function decrementStok($id)
+    {
+        $book = $this->findById($id);
+        if ($book->stok_tersedia > 0) {
+            $book->decrement('stok_tersedia');
+        }
+    }
+
+    public function incrementStok($id)
+    {
+        $book = $this->findById($id);
+        $book->increment('stok_tersedia');
     }
 }

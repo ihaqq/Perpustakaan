@@ -20,8 +20,10 @@ class BookStoreRequest extends FormRequest
             'judul'          => 'required|string|max:255',
             'pengarang'      => 'required|string|max:255',
             'penerbit'       => 'required|string|max:255',
-            'stok'           => 'required|integer|min:0', 
-            'tahun_terbit'   => 'required|integer|digits:4|min:1899|max:' . (date('Y') + 1), 
+            'stok_total'     => 'required|integer|min:0',
+            'stok_tersedia'  => 'integer|min:0',
+            'kondisi_awal'   => 'string|max:255',
+            'tahun_terbit'   => 'required|integer|digits:4|min:1899|max:' . (date('Y') + 1),
             'bahasa'         => 'required|string|max:255',
             'lokasi_rak'     => 'required|string|max:255',
             'jumlah_halaman' => 'required|integer|min:1', 
@@ -53,9 +55,17 @@ class BookStoreRequest extends FormRequest
             'penerbit.max'       => 'Nama penerbit maksimal 255 karakter.',
 
             // Messages untuk stok
-            'stok.required'      => 'Stok buku wajib diisi.',
-            'stok.integer'       => 'Stok buku harus berupa angka.',
-            'stok.min'           => 'Stok buku tidak boleh kurang dari 0.',
+            'stok_total.required' => 'Stok total wajib diisi.',
+            'stok_total.integer'  => 'Stok total harus berupa angka.',
+            'stok_total.min'      => 'Stok total tidak boleh kurang dari 0.',
+
+            // Messages untuk stok tersedia
+            'stok_tersedia.integer' => 'Stok tersedia harus berupa angka.',
+            'stok_tersedia.min'     => 'Stok tersedia tidak boleh kurang dari 0.',
+
+            // Messages untuk kondisi_awal
+            'kondisi_awal.string'   => 'Kondisi awal buku harus berupa teks.',
+            'kondisi_awal.max'      => 'Kondisi awal buku maksimal 255 karakter.',
 
             // Messages untuk tahun_terbit
             'tahun_terbit.required' => 'Tahun terbit wajib diisi.',

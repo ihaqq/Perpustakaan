@@ -25,8 +25,10 @@ class BookResource extends JsonResource
             'sinopsis'      => $this->sinopsis,
             'kategori'      => $this->Genre->kategori_buku ?? null,
             'genre'         => $this->Genre->nama_genre ?? null,
-            'stok'          => $this->stok,
-            'status_stok'   => $this->stok >= 5 ? 'high' : ($this->stok > 0 ? 'low' : 'empty'),
+            'stok_total'    => $this->stok_total ?? null,
+            'stok_tersedia' => $this->stok_tersedia ?? null,
+            'kondisi_awal'  => $this->kondisi_awal ?? null,
+            'status_stok'   => $this->stok_tersedia >= 5 ? 'high' : ($this->stok_tersedia > 0 ? 'low' : 'empty'),
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,
         ];

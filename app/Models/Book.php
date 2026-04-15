@@ -38,7 +38,9 @@ class Book extends Model
         'jumlah_halaman',
         'sinopsis',
         'cover',
-        'stok'
+        'stok_total',
+        'stok_tersedia',
+        'kondisi_awal',
     ];
 
     public function genre()
@@ -46,4 +48,13 @@ class Book extends Model
         return $this->belongsTo(Genre::class,'genres_id', 'id');
     }
 
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class,'book_id', 'id');
+    }
+
+    public function antrian()
+    {
+        return $this->hasMany(Antrian::class,'book_id', 'id');
+    }
 }

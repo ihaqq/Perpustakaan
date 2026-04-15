@@ -20,6 +20,12 @@ class BookService
         
         return $query;
     }
+
+    public function getTotalBooks()
+    {
+        return $this->bookRepository->count();
+    }
+    
     public function getBookById($id)
     {
         return $this->bookRepository->find($id);
@@ -53,6 +59,9 @@ class BookService
                 $data['cover'] = $coverPath;
             }
 
+            // Set stok_tersedia sama dengan stok_total saat pembuatan buku baru
+            $data['stok_tersedia'] = $data['stok_total'];
+            
             // Teruskan data yang sudah siap (beserta path gambar) ke repository
             return $this->bookRepository->create($data);
         });
@@ -79,6 +88,14 @@ class BookService
                 
                 // Ganti value array dengan path file yang baru
                 $data['cover'] = $coverPath;
+            }
+
+                // Jika stok total diupdate, otomatis update juga stok tersedia dengan logika:
+                // stok tersedia baru = stok tersedia lama + (stok total baru - stok total lama)
+            if (isset($data['stok_total'])) {
+                $stokTotalBaru = $data['stok_total'];
+                $stokTersediaLama = $oldBook->stok_tersedia;
+                $data['stok_tersedia'] = $stokTersediaLama + ($stokTotalBaru - $oldBook->stok_total);
             }
 
             // 3. Teruskan data ke repository untuk di-update ke database

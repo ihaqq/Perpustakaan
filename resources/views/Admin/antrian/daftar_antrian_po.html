@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Antrian - SIPERPUS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles & Variables - Mengikuti Halaman Anggota */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --primary-color: #5c6ac4; /* Ungu Indigo */
+            --secondary-color: #f4f6fc;
+            --text-color: #333;
+            --card-bg: #fff;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            --accent-orange: #f6ad55;
+            --text-muted: #777;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        /* Container Full Width */
+        .container {
+            width: 100%;
+            max-width: 1400px; 
+            margin: 0 auto;
+        }
+
+        /* --- NAVBAR (Persis Halaman Anggota) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        #sidebar-toggle {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            margin-right: 20px;
+        }
+
+        .header-left h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .header-right .fa-bell {
+            font-size: 1.2rem;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .user-profile .fa-user-circle {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        /* --- MAIN CARD --- */
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 18px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        /* --- TOOLS (SEARCH) --- */
+		
+		.filter-controls {
+			display: flex;
+			gap: 15px;
+			align-items: center;
+			margin-bottom: 10px; /* Jarak antara search bar dan tabel */
+		}
+
+        .search-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+
+        #queueSearch {
+            width: 100%;
+            padding: 10px 10px 10px 35px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        /* --- TABLE STYLE --- */
+        .table-container {
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        thead th {
+            background-color: #f2f2f2;
+            font-weight: 600;
+            color: #555;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #eee;
+            text-transform: uppercase;
+        }
+
+        td {
+            padding: 20px 15px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        /* Column Specifics */
+        .no-antrian { 
+			font-size: 16px;
+			text-align: center; 
+			font-weight: 600; 
+			color: var(--text-color); }
+		
+		.kode-buku {
+			color: #333;         /* Warna teks sesuai permintaan */
+			font-size: 16px;      /* Ukuran font sesuai permintaan */
+			font-weight: 600;     /* Sedikit lebih tebal agar terbaca jelas */
+			display: block;
+		}
+        
+        /* Sesuaikan bagian ini di antrian4.html agar identik dengan Halaman Buku */
+
+		.info-buku .judul {
+			font-size: 16px;      /* Ukuran judul di halaman buku */
+			font-weight: 600;        /* Ketebalan yang sama */
+			color: #333;          /* Warna teks gelap yang konsisten */
+			display: block;
+		}
+
+		.info-buku .genre {
+			font-size: 12.8px;       /* Ukuran teks pendukung/tahun di halaman buku */
+			color: #888;             /* Warna teks muted */
+			margin-top: 2px;
+			display: block;
+		}
+
+		/* Terapkan hal yang sama untuk kolom Pemesan agar seimbang */
+		.pemesan .nama {
+			font-size: 16px;
+			font-weight: 600;
+			color: #333;
+			display: block;
+		}
+
+		.pemesan .id {
+			font-size: 12.8px;
+			color: #888;
+			margin-top: 2px;
+			display: block;
+		}
+
+        .estimasi .tgl { 
+			font-size: 16px;
+			font-weight: 600;
+			color: #333;
+			display: block;
+		}
+		
+        .estimasi .sub { 
+            font-size: 12.8px; 
+            color: var(--accent-orange); 
+            margin-top: 2px;
+			display: block;
+        }
+
+        .status-pill {
+            background-color: #f0f1fa;
+            color: var(--primary-color);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="navbar">
+            <div class="header-left">
+                <i id="sidebar-toggle" class="fas fa-bars"></i>
+                <h1>Daftar Antrian</h1>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-bell"></i>
+                <div class="user-profile">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <main class="card">
+            <div class="card-header">
+                <h3>Semua Antrian</h3>
+            </div>
+            
+            <div class="filter-controls">
+                <div class="search-wrapper">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="queueSearch" placeholder="Cari Nama atau Buku ...">
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 10%; text-align: center;">No Antrian</th>
+                            <th style="width: 15%;">Kode Buku</th>
+                            <th style="width: 22%;">Informasi Buku</th>
+                            <th style="width: 22%;">Pemesan</th>
+                            <th style="width: 16%;">Estimasi Ready</th>
+                            <th style="width: 15%; text-align: center;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contentTable">
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const dataAntrian = [
+			{
+				no: "01",
+				kode: "BK-0001",
+				judul: "Laskar Pelangi",
+				genre: "Fiksi",
+				pemesan: "Dinda Permata",
+				nisn: "0090721678",
+				estimasi: "15 April 2026",
+				keterangan: "Sedang dipinjam (H-2)",
+				status: "Menunggu"
+			},
+			{
+				no: "02",
+				kode: "BK-0002",
+				judul: "Filosofi Teras",
+				genre: "Non-Fiksi",
+				pemesan: "Dinda Permata",
+				nisn: "0090721678",
+				estimasi: "15 April 2026",
+				keterangan: "Sedang dipinjam (H-2)",
+				status: "Menunggu"
+			},
+			{
+				no: "03",
+				kode: "BK-0003",
+				judul: "Atomic Habits",
+				genre: "Non-Fiksi",
+				pemesan: "Dinda Permata",
+				nisn: "0090721678",
+				estimasi: "15 April 2026",
+				keterangan: "Sedang dipinjam (H-2)",
+				status: "Menunggu"
+			}
+		];
+
+		const tableBody = document.getElementById('contentTable');
+		const searchInput = document.getElementById('queueSearch');
+
+		function renderTable(data) {
+			// Jika data kosong (saat pencarian tidak ditemukan)
+			if (data.length === 0) {
+				tableBody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px; color: #888;">Data antrian tidak ditemukan.</td></tr>`;
+				return;
+			}
+
+			let allRows = ""; // Kumpulkan baris di sini
+			data.forEach(item => {
+				allRows += `
+					<tr>
+						<td class="no-antrian">${item.no}</td>
+						<td><span class="kode-buku">${item.kode}</span></td>
+						<td class="info-buku">
+							<div class="judul">${item.judul}</div>
+							<div class="genre">Genre: ${item.genre}</div>
+						</td>
+						<td class="pemesan">
+							<div class="nama">${item.pemesan}</div>
+							<div class="id">NISN: ${item.nisn}</div>
+						</td>
+						<td class="estimasi">
+							<div class="tgl">${item.estimasi}</div>
+							<div class="sub">${item.keterangan}</div>
+						</td>
+						<td style="text-align: center;"><span class="status-pill">${item.status}</span></td>
+					</tr>
+				`;
+			});
+			tableBody.innerHTML = allRows; // Masukkan ke DOM sekali saja
+		}
+
+		searchInput.addEventListener('input', function() {
+			const query = searchInput.value.toLowerCase().trim();
+			
+			const filteredData = dataAntrian.filter(item => {
+				return (
+					item.judul.toLowerCase().includes(query) ||
+					item.pemesan.toLowerCase().includes(query) ||
+					item.kode.toLowerCase().includes(query) ||
+					item.nisn.toLowerCase().includes(query)
+				);
+			});
+
+			renderTable(filteredData);
+		});
+
+		// Inisialisasi awal
+		renderTable(dataAntrian);
+
+		// Tambahan: Sidebar Toggle Logika Sederhana
+		const toggleBtn = document.getElementById('sidebar-toggle');
+		if(toggleBtn) {
+			toggleBtn.addEventListener('click', () => {
+				console.log("Sidebar toggle clicked");
+				// Tambahkan class 'active' ke sidebar Anda jika sudah ada
+			});
+		}
+	});
+	</script>
+
+</body>
+</html>

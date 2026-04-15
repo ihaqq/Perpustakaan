@@ -34,17 +34,14 @@ class GenreRepository implements GenreRepositoryInterface
         $book = Genre::findOrFail($id);
         return $book->delete();
     }
-    
+
     public function getGenresWithQuery(array $params)
     {
         $query = Genre::query();
 
         //  Search
         if (!empty($params['search'])) {
-            $search = $params['search'];
-            $query->where(function ($q) use ($search) {
-                $q->where('nama_genre', 'like', "%$search%");
-            });
+            $query->where('nama_genre', 'like', "%{$params['search']}%");
         }
 
         //  Filter
@@ -52,6 +49,13 @@ class GenreRepository implements GenreRepositoryInterface
             $query->where('kategori_buku', $params['kategori']);
         }
 
+        // sortBy
+        $sortOrder = 'desc';
+        if (!empty($params['sort_order']) && in_array(strtolower($params['sort_order']), ['asc', 'desc'])) {
+            $sortOrder = strtolower($params['sort_order']);
+        }
+
+        $query->orderBy('created_at', $sortOrder);
         return $query;
     }
 }

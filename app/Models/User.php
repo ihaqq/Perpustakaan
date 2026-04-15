@@ -3,48 +3,43 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasUuids, HasFactory;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
+    // Menentukan nama tabel yang digunakan oleh model ini
+    protected $table = 'users';
+
+    // Menentukan primary key tabel
+    protected $primaryKey = 'id';
+
+    // Menentukan apakah primary key auto-increment
+    public $incrementing = false;
+
+    // Menentukan tipe data primary key
+    protected $keyType = 'string';
+
+    // Menentukan apakah model harus mengelola timestamp created_at dan updated_at
+    public $timestamps = true;
+
     protected $fillable = [
         'id',
         'nama',
         'username',
+        'email',
         'password',
-        'role',
+        'telepon',
+        'foto_profile',
+        'gender',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
-    // protected $hidden = [
-    //     'password',
-    //     'remember_token',
-    // ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    // protected function casts(): array
-    // {
-    //     return [
-    //         'email_verified_at' => 'datetime',
-    //         'password' => 'hashed',
-    //     ];
-    // }
+    public function anggota()
+    {
+        return $this->hasMany(Anggota::class, 'user_id', 'id');
+    }
 }

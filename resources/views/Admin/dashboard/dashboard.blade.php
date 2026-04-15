@@ -25,50 +25,50 @@
             <!-- Statistics Cards -->
             <section class="content">
                 <div class="stat-cards-container">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="window.location='{{ route('daftar-anggota') }}'">
                         <div class="stat-icon">
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-info">
-                            <h2 id="member-count">123</h2>
+                            <h2 id="member-count"></h2>
                             <p>Anggota</p>
-                            <a href="#" class="view-more">
+                            <a class="view-more">
                                 Lihat Selengkapnya <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="window.location='{{ route('daftar-buku') }}'">
                         <div class="stat-icon">
                             <i class="fas fa-book"></i>
                         </div>
                         <div class="stat-info">
-                            <h2 id="book-count">1234</h2>
+                            <h2 id="book-count"></h2>
                             <p>Buku</p>
-                            <a href="#" class="view-more">
+                            <a class="view-more">
                                 Lihat Selengkapnya <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="window.location='{{ route('daftar-peminjaman') }}'">
                         <div class="stat-icon">
                             <i class="fas fa-book-reader"></i>
                         </div>
                         <div class="stat-info">
-                            <h2 id="loan-count">1234</h2>
+                            <h2 id="loan-count"></h2>
                             <p>Peminjaman</p>
-                            <a href="#" class="view-more">
+                            <a class="view-more">
                                 Lihat Selengkapnya <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="window.location='{{ route('daftar-pengembalian') }}'">
                         <div class="stat-icon">
                             <i class="fas fa-undo"></i>
                         </div>
                         <div class="stat-info">
-                            <h2 id="return-count">1234</h2>
+                            <h2 id="return-count"></h2>
                             <p>Pengembalian</p>
-                            <a href="#" class="view-more">
+                            <a class="view-more">
                                 Lihat Selengkapnya <i class="fas fa-arrow-right"></i>
                             </a>
                         </div>
@@ -93,18 +93,6 @@
                                     <p>SMKN 9 MALANG</p>
                                     <p>PERPUSTAKAAN SEKOLAH</p>
                                 </div>
-                                <!-- <div class="info-item">
-                                    <strong>Nama Perpustakaan</strong>
-                                    <p>SMA NAWASENA</p>
-                                </div>
-                                <div class="info-item">
-                                    <strong>Alamat</strong>
-                                    <p>MALANG</p>
-                                </div>
-                                <div class="info-item">
-                                    <strong>Tentang</strong>
-                                    <p>Perpustakaan Sekolah</p>
-                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -115,9 +103,9 @@
                         </div>
                         <div class="card-body row-flex">
                             <div class="chart-info">
-                                <p><strong>Total Inventaris:</strong> <span id="total-inventory">1234</span></p>
-                                <p><strong>Buku di pinjam:</strong> <span id="books-borrowed">500</span></p>
-                                <p><strong>Buku di rak:</strong> <span id="books-available">734</span></p>
+                                <p><strong>Total Inventaris:</strong> <span id="total-inventory"></span></p>
+                                <p><strong>Buku di pinjam:</strong> <span id="books-borrowed"></span></p>
+                                <p><strong>Buku di rak:</strong> <span id="books-available"></span></p>
                             </div>
                             <div class="pie-chart">
                                 <canvas id="bookChart"></canvas>
@@ -137,11 +125,10 @@
                                             <th>No</th>
                                             <th>Nama</th>
                                             <th>Kelas</th>
-                                            <th>Role</th>
+                                            <th>Kategori</th>
                                         </tr>
                                     </thead>
                                     <tbody id="memberTableBody">
-                                        <!-- Data will be populated by JavaScript -->
                                     </tbody>
                                 </table>
                             </div>
@@ -164,7 +151,6 @@
                                         </tr>
                                     </thead>
                                     <tbody id="bookTableBody">
-                                        <!-- Data will be populated by JavaScript -->
                                     </tbody>
                                 </table>
                             </div>
@@ -175,5 +161,5 @@
         </main>
 @endsection
 @push('scripts')
-    @vite('resources/js/admin/dashboard/dashboard_copy.js')
+    @vite('resources/js/admin/dashboard/dashboard.js')
 @endpush
