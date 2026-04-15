@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peminjaman - SIPERPUS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Root & Reset --- */
+        :root {
+            --primary: #5c6ac4;
+            --primary-hover: #4a55a2;
+            --icon-bg-light: #eef0ff;
+            --bg-body: #f7f9ff;
+            --card-white: #ffffff;
+            --text-blue: #4854a0;
+            --text-muted: #8e99af;
+            --border-light: #eceef3;
+            --radius-card: 16px;
+            --radius-input: 10px;
+            --radius-icon: 8px;
+            --cancel-btn-color: #CCCCCC;
+        }
+
+        * { 
+			margin: 0; 
+			padding: 0; 
+			box-sizing: 
+			border-box; 
+			font-family: 'Segoe UI', sans-serif; 
+		}
+
+        body {
+			background: var(--bg-body);
+			font-family: 'Segoe UI', sans-serif;
+			padding: 30px; 
+			margin: 0;
+		}
+
+        /* --- Navbar --- */
+		.navbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 30px;
+			padding: 15px 20px;
+			background-color: var(--card-white);
+			border-radius: 12px; 
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05); 
+			min-height: 77px; 
+		}
+
+		.header-left {
+			display: flex;
+			align-items: center;
+			gap: 0; 
+		}
+
+		.header-left h1 {
+			font-size: 1.8rem;
+			color: var(--primary);
+			font-weight: 700;
+			margin: 0;
+			line-height: 1.2;
+		}
+
+		#sidebar-toggle {
+			font-size: 1.5rem;
+			color: var(--primary);
+			cursor: pointer;
+			margin-right: 20px; 
+		}
+
+		.header-right {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+
+		.header-right .fa-bell {
+			font-size: 1.2rem;
+			color: #777;
+			cursor: pointer;
+		}
+
+		.user-profile {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.user-profile .fa-user-circle {
+			font-size: 2rem;
+			color: var(--primary);
+		}
+
+        /* --- Form Container --- */
+        .form-container {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: var(--card-white);
+            border-radius: var(--radius-card);
+            padding: 22px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 { font-size: 16px; color: var(--text-blue); font-weight: 600; }
+
+        .card-header i {
+            color: var(--text-blue);
+            font-size: 0.95rem;
+            background-color: var(--icon-bg-light);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-icon);
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-blue);
+            margin-bottom: 8px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1.2px solid #e0e6ed;
+            border-radius: var(--radius-input);
+            font-size: 0.85rem;
+            color: #555;
+            background: #fff;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus, .search-input:focus, .filter-btn:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.1);
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .btn-simpan {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: var(--radius-input);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-simpan:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+        /* --- Tabel Styles --- */
+        .table-title-style {
+            font-size: 1.2rem !important;
+            color: var(--primary) !important;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .search-wrapper { position: relative; flex: 1; }
+        .search-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: #777; font-size: 0.9rem; }
+        .search-input {
+            width: 100%;
+            padding: 10px 15px 10px 40px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        
+        thead th {
+            text-align: left;
+            padding: 12px 15px;
+            background: #f2f2f2;
+            color: #555;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+        
+        td {
+            padding: 15px;
+            font-size: 16PX;
+            color: #333;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .status-badge {
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            text-align: center;
+            background-color: #fff4e6;
+            color: #f0ad4e;
+            min-width: 90px;
+        }
+
+        .action-icons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-action {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-view { background-color: #f0f0f0; color: #666; }
+        .btn-return {
+			background-color: #e8f5e9; 
+			color: #2e7d32; 
+			width: 35px;
+			height: 35px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 8px;
+			transition: 0.3s;
+			font-size: 1rem;
+			border: none;
+			cursor: pointer;
+		}
+
+		.btn-return:hover {
+			background-color: #2e7d32;
+			color: white;
+		}
+
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+            gap: 8px;
+        }
+        .pagination button {
+            width: 35px;
+            height: 35px;
+            border: 1px solid #ccc;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .pagination button.active-page {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* --- MODAL STYLES (Dikutip tepat dari popup delete anggota.html) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-confirm {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.active .modal-confirm { transform: scale(1); }
+
+        .icon-box {
+            width: 80px; height: 80px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 4px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            animation: pulse-blue 2s infinite;
+        }
+
+        .icon-box i { color: var(--primary); font-size: 40px; }
+
+        @keyframes pulse-blue {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(92, 106, 196, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(92, 106, 196, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(92, 106, 196, 0); }
+        }
+
+        .modal-confirm h4 { font-size: 1.5rem; margin-bottom: 10px; color: var(--primary); }
+        .modal-confirm p { color: #666; margin-bottom: 25px; line-height: 1.6; }
+
+        .confirm-actions { display: flex; justify-content: center; gap: 15px; }
+
+		.btn-modal {
+			padding: 10px 20px;
+			border-radius: 8px;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			border: none;
+			display: inline-block;
+		}
+
+		.btn-cancel {
+			background-color: transparent;
+			color: #777;
+			border: 2px solid var(--cancel-btn-color) !important;
+		}
+
+		.btn-cancel:hover { background-color: var(--cancel-btn-color); color: white; }
+
+		.btn-confirm {
+			background-color: var(--primary);
+			color: white;
+			border: 2px solid var(--primary);
+		}
+
+		.btn-confirm:hover { background-color: #4b59b1; border-color: #4b59b1; }
+		
+		/* --- MODAL FILTER STYLE --- */
+		.modal-overlay {
+			position: fixed;
+			top: 0; left: 0;
+			width: 100%; height: 100%;
+			background-color: rgba(0, 0, 0, 0.5);
+			backdrop-filter: blur(4px);
+			display: none;
+			justify-content: center;
+			align-items: center;
+			z-index: 10000;
+		}
+
+		.modal-overlay.active { display: flex; }
+
+		.filter-modal {
+			background-color: white;
+			border-radius: 12px;
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+			width: 90%;
+			max-width: 450px;
+			transform: scale(0.9);
+			transition: transform 0.3s ease;
+		}
+
+		.modal-overlay.active .filter-modal { transform: scale(1); }
+
+		.filter-modal-header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px 25px;
+			border-bottom: 1px solid #eceef3;
+		}
+
+		.filter-modal-header h3 {
+			font-size: 1.2rem; /* Ukuran header */
+			color: #5c6ac4;
+			font-weight: 700;
+		}
+
+		.filter-modal-close {
+			font-size: 1.8rem;
+			color: #8e99af;
+			cursor: pointer;
+		}
+
+		.filter-modal-body { padding: 25px; }
+
+		.filter-group { margin-bottom: 20px; }
+
+		/* Ukuran Font Samakan (16px) & Tebal (600) */
+		.filter-group label {
+			display: block;
+			font-size: 16px; 
+			font-weight: 600;
+			color: #4854a0;
+			margin-bottom: 12px;
+		}
+
+		.filter-input {
+			width: 100%;
+			padding: 12px 15px;
+			border: 1.2px solid #e0e6ed;
+			border-radius: 10px;
+			font-size: 16px; /* Font input tidak kekecilan */
+			color: #333;
+			outline: none;
+			transition: 0.2s;
+		}
+
+		.filter-input:focus {
+			border-color: #5c6ac4;
+			box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.1);
+		}
+
+		.filter-modal-actions {
+			display: flex;
+			justify-content: flex-end;
+			gap: 12px;
+			padding: 20px 25px;
+			border-top: 1px solid #eceef3;
+		}
+
+		/* Tombol Aksi */
+		.btn-filter-modal {
+			padding: 12px 24px;
+			border-radius: 8px;
+			font-weight: 600;
+			font-size: 16px;
+			cursor: pointer;
+			border: none;
+			transition: 0.3s;
+		}
+
+		.btn-reset { background: #f0f0f0; color: #666; }
+		.btn-apply { background: #5c6ac4; color: white; }
+    </style>
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <header class="navbar">
+			<div class="header-left">
+				<i id="sidebar-toggle" class="fas fa-bars"></i>
+				<h1>Peminjaman</h1>
+			</div>
+			<div class="header-right">
+				<i class="fas fa-bell"></i>
+				<div class="user-profile"><i class="fas fa-user-circle"></i></div>
+			</div>
+		</header>
+
+        <main class="main-content">
+            <div class="form-container">
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-address-card"></i><h3>Informasi Peminjaman</h3></div>
+                    <div class="form-group" style="margin-bottom:15px;">
+                        <label>Nama Anggota:</label>
+                        <input type="text" placeholder="Cari nama anggota...">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Tanggal Pinjam:</label><input type="date"></div>
+                        <div class="form-group"><label>Tanggal Kembali:</label><input type="date"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><i class="fas fa-book-medical"></i><h3>Tambah Buku</h3></div>
+                    <div class="form-group" style="margin-bottom: 25px;">
+                        <label>Judul Buku:</label>
+                        <input type="text" placeholder="Cari judul buku...">
+                    </div>
+                    <button class="btn-simpan">SIMPAN PEMINJAMAN</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header" style="border-bottom: 2px solid var(--border-light); margin-bottom: 20px;">
+                    <h3 class="table-title-style">Semua Peminjaman Buku</h3>
+                </div>
+                
+                <div class="card-body">
+                    <div class="filter-controls">
+                        <button id="btnOpenFilter" class="filter-btn">
+							<i class="fas fa-filter"></i> Filter
+						</button>
+
+						<div id="filterModalOverlay" class="modal-overlay">
+							<div class="filter-modal">
+								<div class="filter-modal-header">
+									<h3>Filter Peminjaman</h3>
+									<span id="btnCloseFilter" class="filter-modal-close">&times;</span>
+								</div>
+								<div class="filter-modal-body">
+									<div class="filter-group">
+										<label>Tanggal Pinjam</label>
+										<input type="date" id="filterTglPinjam" class="filter-input">
+									</div>
+									<div class="filter-group">
+										<label>Batas Kembali</label>
+										<input type="date" id="filterTglKembali" class="filter-input">
+									</div>
+								</div>
+								<div class="filter-modal-actions">
+									<button id="btnResetFilter" class="btn-filter-modal btn-reset">Reset</button>
+									<button id="btnApplyFilter" class="btn-filter-modal btn-apply">Terapkan Filter</button>
+								</div>
+							</div>
+						</div>
+						
+                        <div class="search-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" class="search-input" placeholder="Cari Nama Anggota...">
+                        </div>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table id="peminjamanTable">
+                            <thead>
+                                <tr>
+                                    <th style="width: 8%;">NO</th>
+                                    <th style="width: 15%;">ID PEMINJAMAN</th>
+                                    <th style="width: 22%;">NAMA ANGGOTA</th>
+                                    <th style="width: 15%;">TGL PINJAM</th>
+                                    <th style="width: 15%;">BATAS KEMBALI</th>
+                                    <th style="width: 15%; text-align: center;">STATUS</th>
+                                    <th style="width: 10%; text-align: center;">AKSI</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+									<td>1</td><td>P0001</td><td>Dinda Permata</td><td>10/04/2025</td><td>17/04/2025</td>
+									<td style="text-align: center;"><span class="status-badge">DIPINJAM</span></td>
+									<td style="text-align: center;">
+										<div class="action-icons">
+											<button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
+											<button class="btn-return" onclick="openReturnModal('P0001')"><i class="fas fa-arrow-right"></i></button>
+										</div>
+									</td>
+								</tr>
+                                <tr>
+									<td>2</td><td>P0002</td><td>Salsabila</td><td>11/04/2026</td><td>18/04/2026</td>
+									<td style="text-align: center;"><span class="status-badge">DIPINJAM</span></td>
+									<td style="text-align: center;">
+										<div class="action-icons">
+											<button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
+											<button class="btn-return" onclick="openReturnModal('P0002')"><i class="fas fa-arrow-right"></i></button>
+										</div>
+									</td>
+								</tr>
+                                <tr>
+                                    <td>3</td><td>P0003</td><td>Mutiara</td><td>12/04/2026</td><td>19/04/2026</td>
+                                    <td style="text-align: center;"><span class="status-badge">DIPINJAM</span></td>
+                                    <td style="text-align: center;">
+                                        <div class="action-icons">
+											<button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
+											<button class="btn-return" onclick="openReturnModal('P0003')"><i class="fas fa-arrow-right"></i></button>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td><td>P0004</td><td>Dewita</td><td>13/04/2026</td><td>20/04/2026</td>
+                                    <td style="text-align: center;"><span class="status-badge">DIPINJAM</span></td>
+                                    <td style="text-align: center;">
+                                        <div class="action-icons">
+											<button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
+											<button class="btn-return" onclick="openReturnModal('P0004')"><i class="fas fa-arrow-right"></i></button>
+										</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>5</td><td>P0005</td><td>Zara</td><td>13/04/2026</td><td>20/04/2026</td>
+                                    <td style="text-align: center;"><span class="status-badge">DIPINJAM</span></td>
+                                    <td style="text-align: center;">
+                                        <div class="action-icons">
+											<button class="btn-action btn-view"><i class="fas fa-eye"></i></button>
+											<button class="btn-return" onclick="openReturnModal('P0005')"><i class="fas fa-arrow-right"></i></button>
+										</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button><i class="fas fa-chevron-left"></i></button>
+                        <button class="active-page">1</button><button>2</button><button>3</button>
+                        <button><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="returnModalOverlay" class="modal-overlay">
+        <div class="modal-confirm">
+            <div class="icon-box">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h4>Konfirmasi Kembali</h4>
+            <p>Apakah Anda yakin ingin memproses pengembalian buku untuk ID: <span id="displayID" style="font-weight: 700;"></span>?</p>
+            <div class="confirm-actions">
+                <button onclick="closeReturnModal()" class="btn-modal btn-cancel">Batal</button>
+                <button id="btnConfirmReturn" class="btn-modal btn-confirm">Proses</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('returnModalOverlay');
+        const displayID = document.getElementById('displayID');
+
+        function openReturnModal(id) {
+            displayID.innerText = id;
+            modal.classList.add('active');
+        }
+
+        function closeReturnModal() {
+            modal.classList.remove('active');
+        }
+
+        document.getElementById('btnConfirmReturn').addEventListener('click', () => {
+            console.log("Buku ID " + displayID.innerText + " dikembalikan");
+            closeReturnModal();
+        });
+
+        window.onclick = (e) => {
+            if (e.target == modal) closeReturnModal();
+        };
+		
+		// Ambil elemen-elemen yang dibutuhkan
+		const filterOverlay = document.getElementById('filterModalOverlay');
+		const btnOpenFilter = document.getElementById('btnOpenFilter'); 
+		const btnCloseFilter = document.getElementById('btnCloseFilter');
+		const btnResetFilter = document.getElementById('btnResetFilter');
+		const btnApplyFilter = document.getElementById('btnApplyFilter');
+
+		const inputTglPinjam = document.getElementById('filterTglPinjam');
+		const inputTglKembali = document.getElementById('filterTglKembali');
+
+		// Fungsi Utama Filter
+		btnApplyFilter.addEventListener('click', () => {
+			const filterPinjam = inputTglPinjam.value; // Format: YYYY-MM-DD
+			const filterKembali = inputTglKembali.value;
+			const tableRows = document.querySelectorAll('#peminjamanTable tbody tr');
+
+			tableRows.forEach(row => {
+				// Ambil teks dari kolom 4 (Pinjam) dan 5 (Kembali)
+				const tglPinjamTeks = row.cells[3].textContent.trim();
+				const tglKembaliTeks = row.cells[4].textContent.trim();
+
+				// Ubah teks "DD/MM/YYYY" di tabel menjadi "YYYY-MM-DD" untuk dibandingkan
+				const tglPinjamFormatted = formatDateToISO(tglPinjamTeks);
+				const tglKembaliFormatted = formatDateToISO(tglKembaliTeks);
+
+				let isMatch = true;
+
+				// Logika Filter Tanggal Pinjam
+				if (filterPinjam && tglPinjamFormatted !== filterPinjam) {
+					isMatch = false;
+				}
+
+				// Logika Filter Tanggal Kembali
+				if (filterKembali && tglKembaliFormatted !== filterKembali) {
+					isMatch = false;
+				}
+
+				row.style.display = isMatch ? "" : "none";
+			});
+
+			filterOverlay.classList.remove('active');
+		});
+
+		// Fungsi untuk mengubah format DD/MM/YYYY menjadi YYYY-MM-DD
+		function formatDateToISO(dateStr) {
+			const parts = dateStr.split('/');
+			if (parts.length === 3) {
+				// parts[0]=DD, parts[1]=MM, parts[2]=YYYY -> Jadi YYYY-MM-DD
+				return `${parts[2]}-${parts[1]}-${parts[0]}`;
+			}
+			return "";
+		}
+
+		// Tombol Reset
+		btnResetFilter.addEventListener('click', () => {
+			inputTglPinjam.value = '';
+			inputTglKembali.value = '';
+			document.querySelectorAll('#peminjamanTable tbody tr').forEach(row => {
+				row.style.display = "";
+			});
+		});
+
+		// Buka/Tutup Modal
+		btnOpenFilter.addEventListener('click', () => filterOverlay.classList.add('active'));
+		btnCloseFilter.addEventListener('click', () => filterOverlay.classList.remove('active'));
+		window.onclick = (e) => { if (e.target == filterOverlay) filterOverlay.classList.remove('active'); };
+    </script>
+</body>
+</html>

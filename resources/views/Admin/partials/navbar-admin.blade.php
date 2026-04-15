@@ -17,15 +17,15 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="{{ request()->routeIs('daftar-anggota') || request()->routeIs('tambah-anggota') ? 'active' : ''}}">
+                    <li class="{{ request()->routeIs('daftar-anggota') || request()->routeIs('konfirmasi-pengguna') ? 'active' : ''}}">
                         <a href="#" class="menu-toggle">
                             <i class="fas fa-users"></i> 
                             <span>Anggota</span> 
                             <i class="fas fa-caret-down"></i>
                         </a>
-                        <ul class="submenu" style="{{ request()->routeIs('daftar-anggota') || request()->routeIs('tambah-anggota') ? 'display: block;' : ''}}">
+                        <ul class="submenu" style="{{ request()->routeIs('daftar-anggota') || request()->routeIs('konfirmasi-pengguna') ? 'display: block;' : ''}}">
                             <li class="{{ request()->routeIs('daftar-anggota') ? 'active' : ''}}"><a href="{{route('daftar-anggota')}}"><i class="fas fa-list"></i>Daftar Anggota</a></li>
-                            <li class="{{ request()->routeIs('tambah-anggota') ? 'active' : ''}}"><a href="{{route('konfirmasi-pengguna')}}"><i class="fas fa-user-plus"></i>Konfirmasi Pengguna</a></li>
+                            <li class="{{ request()->routeIs('konfirmasi-pengguna') ? 'active' : ''}}"><a href="{{route('konfirmasi-pengguna')}}"><i class="fas fa-user-plus"></i>Konfirmasi Pengguna</a></li>
                         </ul>
                     </li>
                     <li class="{{ request()->routeIs('daftar-buku') || request()->routeIs('daftar-genre') ? 'active' : ''}}">
@@ -50,15 +50,15 @@
                             <li class="{{ request()->routeIs('daftar-pengambilan') ? 'active' : ''}}"><a href="{{ route('daftar-pengambilan') }}"><i class="fas fa-check-circle"></i>Daftar Pengambilan</a></li>
                         </ul>
                     </li>
-                    <li class="{{ request()->routeIs('peminjaman') || request()->routeIs('pengembalian') || request()->routeIs('riwayat-transaksi') ? 'active' : ''}}">
+                    <li class="{{ request()->routeIs('peminjaman') || request()->routeIs('daftar-pengembalian') || request()->routeIs('riwayat-transaksi') ? 'active' : ''}}">
                         <a href="#" class="menu-toggle">
                             <i class="fas fa-exchange-alt"></i> 
                             <span>Transaksi</span> 
                             <i class="fas fa-caret-down"></i>
                         </a>
-                        <ul class="submenu" style="{{ request()->routeIs('peminjaman') || request()->routeIs('pengembalian') || request()->routeIs('riwayat-transaksi') ? 'display: block;' : ''}}">
-                            <li class="{{ request()->routeIs('peminjaman') ? 'active' : ''}}"><a href="transaksi.html"><i class="fas fa-hand-holding"></i>Peminjaman</a></li>
-                            <li class="{{ request()->routeIs('pengembalian') ? 'active' : ''}}"><a href="#"><i class="fas fa-undo-alt"></i>Pengembalian</a></li>
+                        <ul class="submenu" style="{{ request()->routeIs('peminjaman') || request()->routeIs('daftar-pengembalian') || request()->routeIs('riwayat-transaksi') ? 'display: block;' : ''}}">
+                            <li class="{{ request()->routeIs('peminjaman') ? 'active' : ''}}"><a href="{{ route('daftar-peminjaman') }}"><i class="fas fa-hand-holding"></i>Peminjaman</a></li>
+                            <li class="{{ request()->routeIs('daftar-pengembalian') ? 'active' : ''}}"><a href="{{ route('daftar-pengembalian') }}"><i class="fas fa-undo-alt"></i>Pengembalian</a></li>
                             <li class="{{ request()->routeIs('riwayat-transaksi') ? 'active' : ''}}"><a href="{{route('riwayat-transaksi')}}"><i class="fas fa-history"></i>Riwayat</a></li>
                         </ul>
                     </li>

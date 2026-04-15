@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - SIPERPUS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-indigo: #5c6ac4;
+            --primary-hover: #4a55a2;
+            --bg-light: #f0f4f8;
+            --text-main: #333;
+            --text-gray: #888;
+            --border-color: #e0e6ed;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
+
+        body {
+            background-color: var(--bg-light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            text-align: center;
+            position: relative;
+            margin-top: 30px;
+        }
+
+        .logo-wrapper {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            margin: -65px auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+            border: 4px solid white;
+        }
+
+        .logo-wrapper img { width: 70%; height: auto; }
+
+        h2 { color: var(--text-main); margin-bottom: 1.5rem; font-weight: 600; font-size: 1.5rem; }
+
+        .form-group { margin-bottom: 0.8rem; text-align: left; }
+
+        .input-wrapper { position: relative; width: 100%; }
+
+        .input-wrapper input, .input-wrapper select {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            outline: none;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            transition: 0.2s ease;
+            background-color: #fff;
+            appearance: none;
+        }
+
+        .input-wrapper input:focus, .input-wrapper select:focus {
+            border-color: var(--primary-indigo);
+            box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.06);
+        }
+
+        .field-icon {
+            position: absolute; left: 16px; top: 50%;
+            transform: translateY(-50%); width: 16px; height: 16px;
+            fill: var(--text-gray); pointer-events: none;
+        }
+
+        .password-toggle {
+            position: absolute; right: 16px; top: 50%;
+            transform: translateY(-50%); width: 18px; height: 18px;
+            fill: var(--text-gray); cursor: pointer;
+        }
+
+        .select-arrow {
+            position: absolute; right: 15px; top: 50%;
+            transform: translateY(-50%); width: 12px;
+            fill: var(--text-gray); pointer-events: none;
+        }
+
+        .btn-register {
+            width: 100%; padding: 12px;
+            background: var(--primary-indigo); color: white;
+            border: none; border-radius: 12px;
+            font-weight: 600; cursor: pointer; font-size: 0.95rem;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover { background: var(--primary-hover); }
+
+        .divider {
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            color: #ddd;
+            font-size: 0.75rem;
+        }
+
+        .divider::before, .divider::after {
+            content: ""; flex: 1; height: 1px;
+            background: var(--border-color); margin: 0 12px;
+        }
+
+        .btn-google {
+            width: 100%; padding: 10px;
+            background: white; border: 1px solid var(--border-color);
+            border-radius: 12px; display: flex;
+            align-items: center; justify-content: center;
+            gap: 12px; cursor: pointer; font-size: 0.9rem; color: #555;
+            transition: background 0.2s;
+        }
+
+        .btn-google:hover { background: #fafafa; }
+
+        .login-text { margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-gray); }
+        .login-text a { color: var(--primary-indigo); text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="logo-wrapper">
+            <img src="logo.png" alt="Siperpus">
+        </div>
+
+        <h2>Create Account</h2>
+
+        <form action="#">
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <svg class="field-icon" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                    <input type="text" placeholder="Username" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <svg class="field-icon" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <svg class="field-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <svg class="password-toggle toggleEye" data-target="password" viewBox="0 0 24 24"><path class="eye-path" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <svg class="field-icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                    <svg class="password-toggle toggleEye" data-target="confirmPassword" viewBox="0 0 24 24"><path class="eye-path" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <svg class="field-icon" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+                    <select id="kategoriSelect" required>
+                        <option value="" disabled selected>Pilih Kategori</option>
+                        <option value="siswa">Siswa</option>
+                        <option value="guru">Guru</option>
+                    </select>
+                    <svg class="select-arrow" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-register">REGISTER</button>
+        </form>
+
+        <div class="divider">OR</div>
+
+        <button type="button" class="btn-google">
+            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18">
+            Sign up with Google
+        </button>
+
+        <p class="login-text">
+            Already have an account? <a href="login.html">Login</a>
+        </p>
+    </div>
+
+    <script>
+        // Logika untuk toggle mata pada semua field password
+        const eyeOpen = "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z";
+        const eyeClosed = "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.82l2.92 2.92c1.51-1.26 2.7-2.89 3.44-4.74-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z";
+
+        document.querySelectorAll('.toggleEye').forEach(button => {
+            button.addEventListener('click', function() {
+                const targetId = this.getAttribute('data-target');
+                const passwordField = document.getElementById(targetId);
+                const eyePath = this.querySelector('.eye-path');
+                const isPassword = passwordField.getAttribute('type') === 'password';
+                passwordField.setAttribute('type', isPassword ? 'text' : 'password');
+                eyePath.setAttribute('d', isPassword ? eyeClosed : eyeOpen);
+            });
+        });
+
+        // Logika Auto-Select Kategori dari URL Parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const role = urlParams.get('role');
+
+        if (role) {
+            const select = document.getElementById('kategoriSelect');
+            select.value = role;
+        }
+    </script>
+</body>
+</html>

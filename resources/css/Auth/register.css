@@ -1,0 +1,190 @@
+:root {
+    --primary-indigo: #5c6ac4;
+    --primary-hover: #4a55a2;
+    --bg-light: #f0f4f8;
+    --text-main: #333;
+    --text-gray: #888;
+    --border-color: #e0e6ed;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: var(--bg-light);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.card {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    text-align: center;
+    position: relative;
+    margin-top: 30px;
+}
+
+.logo-wrapper {
+    width: 70px;
+    height: 70px;
+    background: white;
+    border-radius: 50%;
+    margin: -65px auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 4px solid white;
+}
+
+.logo-wrapper img {
+    width: 70%;
+    height: auto;
+}
+
+h2 {
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 0.8rem;
+    text-align: left;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.input-wrapper input,
+.input-wrapper select {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    outline: none;
+    font-size: 0.9rem;
+    color: var(--text-main);
+    transition: 0.2s ease;
+    background-color: #fff;
+    appearance: none;
+}
+
+.input-wrapper input:focus,
+.input-wrapper select:focus {
+    border-color: var(--primary-indigo);
+    box-shadow: 0 0 0 3px rgba(92, 106, 196, 0.06);
+}
+
+.field-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    fill: var(--text-gray);
+    pointer-events: none;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    fill: var(--text-gray);
+    cursor: pointer;
+}
+
+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    fill: var(--text-gray);
+    pointer-events: none;
+}
+
+.btn-register {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-indigo);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+    margin-top: 10px;
+}
+
+.btn-register:hover {
+    background: var(--primary-hover);
+}
+
+.divider {
+    margin: 1.5rem 0;
+    display: flex;
+    align-items: center;
+    color: #ddd;
+    font-size: 0.75rem;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+    margin: 0 12px;
+}
+
+.btn-google {
+    width: 100%;
+    padding: 10px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #555;
+    transition: background 0.2s;
+}
+
+.btn-google:hover {
+    background: #fafafa;
+}
+
+.login-text {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+.login-text a {
+    color: var(--primary-indigo);
+    text-decoration: none;
+    font-weight: 600;
+}
